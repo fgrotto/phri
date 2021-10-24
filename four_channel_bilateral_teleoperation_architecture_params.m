@@ -6,21 +6,21 @@ close all;
 A = 1;
 
 % Low pass frequency cuff off
-Fip = 10;
+Fip = 1;
 % Sin frequency
 Fc = 1; 
 
 % Master controller
 Bm = 0.2;
-Km = 15;
+Km = 30;
 
 % Human intention controller
-Ph = 1;
+Ph = 5;
 Dh = 1;
 
 % Slave controller
 Bs = 0.2;
-Ks = 15;
+Ks = 30;
 
 % Intertia of robot dynamics
 Mm = 0.5;
@@ -42,3 +42,6 @@ Kh = 2000;
 Je = 0;
 Be = 100;
 Ke = 200;
+
+% High frequency pole
+tau = 10000;
