@@ -8,8 +8,8 @@
 \usepackage{url}
 \usepackage{bm}
 \usepackage{float}
-\usepackage{libertine}
-\usepackage{newtxmath}
+\usepackage{kpfonts}
+\usepackage{mathpazo}
 \usepackage{enumitem}
 \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
@@ -21,6 +21,17 @@
 \maketitle
 \tableofcontents
 
+\section{Four channel bilateral teleoperation architecture}
+Implement the SISO Four-channel bilateral teleoperation architecture with
+\[
+    C_m = B_m + \frac{K_m}{s} \quad
+    C_s = B_s + \frac{K_s}{s}
+\]
+\[
+    Z_m^{-1} = \frac{1}{M_ms + D_m} \quad
+    Z_s^{-1} = \frac{1}{M_ss + D_s}
+\]
+
+\bigskip
+\noindent where $Mm = 0.5$, $M_s = 2$. Moreover $D_s = 10$ and $D_m = 5$ or both zero in the initial case.
 \end{document}
-
-
