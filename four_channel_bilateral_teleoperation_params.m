@@ -3,7 +3,7 @@ clear all;
 close all;
 
 % Input function parameter (sin or step with low pass filter)
-A = 50;
+A = 1;
 
 % Low pass frequency cuff off
 Fip = 1;
@@ -11,15 +11,16 @@ Fip = 1;
 Fc = 1; 
 
 % Human intention controller (PI)
-Ph = 0.2;
-Dh = 1.5;
+Ph = 20000; % Much better results with 201000;
+Dh = 1000;
+
 % Master controller
-Bm = 0.2;
-Km = 30;
+Bm = 0.8;
+Km = 1;
 
 % Slave controller
-Bs = 0.2;
-Ks = 30;
+Bs = 0.8*4;
+Ks = 4;
 
 % Intertia of robot dynamics
 Mm = 0.5;
@@ -39,11 +40,10 @@ Kh = 2000;
 
 % Environment impedance parameters
 Je = 0;
-Be = 100;
+Be = 0; %100;
 Ke = 200;
 
-% High frequency pole
-tau = 10000;
+Ts = 0.001;
 
 s = tf('s');
 Zm = Mm*s+Dm;
@@ -62,3 +62,5 @@ H21 = minreal(D*(Zs+Cs-C3*C4))
 H22 = -D*(1-C3*C2)
 
 Zwidth = (H12*H21 - H11*H22) / (H22*H21)
+
+% G = w_n^2/(s^2+2*w_n*xi*s+w_n^2)
