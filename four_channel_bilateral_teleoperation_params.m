@@ -11,7 +11,7 @@ Fip = 1;
 Fc = 1; 
 
 % Human intention controller (PI)
-Ph = 20000; % Much better results with 201000;
+Ph = 201000; % Much better results with 201000;
 Dh = 1000;
 
 % Master controller
