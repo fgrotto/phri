@@ -11,14 +11,14 @@ Fip = 1;
 Fc = 1; 
 
 % Human intention controller (PI)
-Ph = 201000; % Much better results with 201000;
-Dh = 1000;
+Ph = 20100; %20000; % Much better results with 201000;
+Dh = 100; %1000;
 
 % Master controller
 Bm = 0.8;
 Km = 1;
 
-% Slave controller
+% Slave controllerxs
 Bs = 0.8*4;
 Ks = 4;
 
