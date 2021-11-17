@@ -11,7 +11,7 @@ Fip = 1;
 Fc = 1; 
 
 % Human intention controller (PI)
-Ph = 20100; %20000; % Much better results with 201000;
+Ph = 20100; %20000;
 Dh = 100; %1000;
 
 % Master controller
@@ -41,26 +41,33 @@ Kh = 2000;
 % Environment impedance parameters
 Je = 0;
 Be = 0; %100;
-Ke = 200;
+Ke = 50; %200;
+
+% Inner force loop
+Cmf = 1;
+Csf = 1;
 
 Ts = 0.001;
 
-s = tf('s');
-Zm = Mm*s+Dm;
-Zs = Ms*s+Ds;
-Cm = (Bm*s+Km)/s;
-Cs = (Bs*s+Ks)/s;
-C4 = -(Mm*s^2+(Bm+Dm)*s+Km)/s;
-C2 = 1;
-C1 = (Ms*s^2+(Bs+Ds)*s+Ks)/s;
-C3 = 1;
-D = 1/(C1+C3*Zm+C3*Cm);
+VarianceForces = 0.01;
+VarianceVelocities = 0.000001;
 
-H11 = (Zm+Cm)*D*(Zs+Cs-C3*C4)+C4
-H12 = -(Zm+Cm)*D*(1-C3*C2)-C2
-H21 = minreal(D*(Zs+Cs-C3*C4))
-H22 = -D*(1-C3*C2)
-
-Zwidth = (H12*H21 - H11*H22) / (H22*H21)
+% s = tf('s');
+% Zm = Mm*s+Dm;
+% Zs = Ms*s+Ds;
+% Cm = (Bm*s+Km)/s;
+% Cs = (Bs*s+Ks)/s;
+% C4 = -(Mm*s^2+(Bm+Dm)*s+Km)/s;
+% C2 = 1;
+% C1 = (Ms*s^2+(Bs+Ds)*s+Ks)/s;
+% C3 = 1;
+% D = 1/(C1+C3*Zm+C3*Cm);
+% 
+% H11 = (Zm+Cm)*D*(Zs+Cs-C3*C4)+C4
+% H12 = -(Zm+Cm)*D*(1-C3*C2)-C2
+% H21 = minreal(D*(Zs+Cs-C3*C4))
+% H22 = -D*(1-C3*C2)
+% 
+% Zwidth = (H12*H21 - H11*H22) / (H22*H21)
 
 % G = w_n^2/(s^2+2*w_n*xi*s+w_n^2)
