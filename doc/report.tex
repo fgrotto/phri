@@ -23,7 +23,7 @@
 
 \section{Four channel bilateral teleoperation architecture}
 
-\subsection{Continuous and discretized implementation}
+\subsection{HW1: Continuous and discretized implementation}
 Implement the SISO Four-channel bilateral teleoperation architecture with
 \[
     C_m = B_m + \frac{K_m}{s} \quad
@@ -64,5 +64,73 @@ G_s = \frac{1}{M_ss^2+B_ss+K_s}
 \end{figure}
 
 \noindent Finally the entire architecture was translated in the related discretized version according to our specification in terms of encoders and the related derivative were performed using the simulink block. In the following section a proper estimation tool will be analysed.
-    
+
+\subsection{HW2: Derive hybrid matrix}
+
+Derive the hybrid matrix for the four channel bilateral teleoperation considering the inner force loop at the master and slave side. We will consider $Z_{cm} = C_{6}$ and $Z_{sm} = C_{5}$. 
+
+\[
+\begin{bmatrix}  f_m \\ -v_s \end{bmatrix} = \begin{bmatrix}
+    \overline{H_{11}} & \overline{H_{12}} \\
+    \overline{H_{21}} &  \overline{H_{22}} \\
+\end{bmatrix} = \begin{bmatrix}  v_m \\ f_s \end{bmatrix}
+\]
+
+\noindent Let's start by defining:
+\begin{equation}
+    v_m = Z_{cm}^{-1}(f_m -C_2f_s-C_4v_s+C_6f_m)
+\end{equation}
+\begin{equation}
+    v_s = Z_{cs}^{-1}(-f_s +C_5f_s+C_1v_m+C_3f_m)
+\end{equation}
+
+\noindent Finally let's compute the 4 components of the hybrid matrix considering one component to zero at each step.
+\[
+    \overline{H_{11}} : f_m \rightarrow v_m \qquad f_s = 0
+    \]\[
+    Z_{cm}v_m = f_m - C_4Z_{cs}^{-1}C_1v_m - C_4Z_{cs}^{-1}C_3f_m + C_6f_m
+\]\[
+    v_m(Z_{cm}+C_4Z_{cs}^{-1}C_1) = f_m(1-C_4Z_{cs}^{-1}C_3 + C_6)
+    \]\[
+    \overline{H_{11}} = \frac{Z_{cm}Z_{cs}+C_1C_4}{(1+C_6)Z_{cs} - C_3C_4}
+\]
+
+
+\bigskip
+
+\[
+    \overline{H_{12}} : f_m \rightarrow f_s \qquad v_m = 0
+    \]\[
+    0 = f_m -C_2f_s -C_4Z_{cs}^{-1}C_5f_s + C_4Z_{cs}^{-1}f_s - C_6f_m
+\]\[
+    f_m(1-C_6-C_4Z_{cs}^{-1}C_3) = f_s(C_2+C_4Z_{cs}^{-1}C_5-C_4Z_{cs}^{-1})
+    \]\[
+    \overline{H_{12}} = \frac{C_2Z_{cs}-C_4(1+C_5)}{(1+C_6)Z_{cs} - C_3C_4}
+\]
+
+\bigskip
+
+\[
+    \overline{H_{21}} : -v_s \rightarrow v_m \qquad f_s = 0
+    \]\[
+    v_sZ_{cs} = -(C_1v_m + C_3f_m)
+\]\[
+    v_s(Z_{cs} - \frac{C_3C_4}{1+C_6} = -v_m(C_1 + \frac{C_3Z_{cm}}{1+C_6})
+    \]\[
+    \overline{H_{21}} = -\frac{C_1(1+C_6) + C_3Z_{cm}}{(1+C_6)Z_{cs} - C_3C_4}
+\]
+
+
+\bigskip
+
+\[
+    \overline{H_{22}} : -v_s \rightarrow f_s \qquad v_m = 0
+\]\[
+    v_sZ_{cs} = -(C_5f_s - f_s +C_5f_s)
+\]\[
+    v_s(Z_{cs}-\frac{C_3C_4}{1+C_6}) = -f_s(C_5 - 1 + \frac{C_3C_2}{1+C_6})
+\]\[
+    \overline{H_{22}} = \frac{(1-C_5)(1+C_6)-C_2C_3}{(1+C_6)Z_{cs}-C_3C_4}
+\]
+
 \end{document}
