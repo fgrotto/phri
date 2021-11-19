@@ -76,6 +76,14 @@ Derive the hybrid matrix for the four channel bilateral teleoperation considerin
 \end{bmatrix} = \begin{bmatrix}  v_m \\ f_s \end{bmatrix}
 \]
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.4]{images/teleop.png}
+    \end{center}
+    \caption{Extended Lawrence Architecture taken from \textit{Global Transparency Analysis of the Lawrence Teleoperator Architecture} Edvard Naerum and Blake Hannaford. In our case $C_7$ and $C_8$ are zero}
+    \label{fig:hw3_vel}
+\end{figure}
+
 \noindent Let's start by defining:
 \begin{equation}
     v_m = Z_{cm}^{-1}(f_m -C_2f_s-C_4v_s+C_6f_m)
@@ -132,5 +140,42 @@ Derive the hybrid matrix for the four channel bilateral teleoperation considerin
 \]\[
     \overline{H_{22}} = \frac{(1-C_5)(1+C_6)-C_2C_3}{(1+C_6)Z_{cs}-C_3C_4}
 \]
+
+\subsection{HW3: Kalman Filter and Predictor}
+The aim is to estimate the velocities and accelerations from noisy position measurements. Some samples were provided for the task and the kalman filter and predictor were implemented as well as the steady state versions. In Fig \ref{fig:hw3_vel} and in Fig \ref{fig:hw3_acc} the estimations of velocities and accelerations are reported. The equations for the kalman filter and predictor are not reported. Let's derive the discretized model for the position, velocities and accelerations to use in the kalman filter:
+
+\begin{equation}
+    \dot{x}(t) =  \begin{bmatrix}  0&1&0 \\ 0&0&1\\0&0&0 \end{bmatrix} x(t) + \begin{bmatrix}  0\\0\\1 \end{bmatrix} w(t)
+    \qquad
+    y(t) = \begin{bmatrix}  1&0&0 \end{bmatrix}x(t) + v(t)
+\end{equation}
+
+\noindent Let's discretize the continuous-time model:
+\[
+    A_d = e^{AT_s} = e^{\begin{bmatrix}  0&1&0 \\ 0&0&1\\0&0&0 \end{bmatrix}T_s} = \begin{bmatrix} 1&T_s&\frac{T_s^2}{2}\\0&1&T_s\\0&0&1 \end{bmatrix}
+\]
+\[
+    C_d = C = \begin{bmatrix} 1&0&0 \end{bmatrix}
+\]
+\[
+    B_d = \left (\int_{0}^{T_s} e^{\begin{bmatrix} 1&\tau&\tau^2/2\\0&1&\tau\\0&0&1 \end{bmatrix}} \,d\tau \right) = \begin{bmatrix} T_s^3/6\\T_s^2/2\\T_s \end{bmatrix}
+\]
+
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=1.0]{images/velocities.eps}
+    \end{center}
+    \caption{Velocities estimations using kalman filter, kalman predictor and euler against the real values. As expected the euler approximation is much more noisy}
+    \label{fig:hw3_vel}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=1.0]{images/acc.eps}
+    \end{center}
+    \caption{Accelerations estimations using kalman filter, kalman predictor and euler against the real values. As expected the euler approximation is much more noisy}
+    \label{fig:hw3_acc}
+\end{figure}
 
 \end{document}
