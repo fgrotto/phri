@@ -164,7 +164,7 @@ The aim is to estimate the velocities and accelerations from noisy position meas
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=1.0]{images/velocities.eps}
+        \includegraphics[scale=0.7]{images/velocities.eps}
     \end{center}
     \caption{Velocities estimations using kalman filter, kalman predictor and euler against the real values. As expected the euler approximation is much more noisy}
     \label{fig:hw3_vel}
@@ -172,10 +172,28 @@ The aim is to estimate the velocities and accelerations from noisy position meas
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=1.0]{images/acc.eps}
+        \includegraphics[scale=0.7]{images/acc.eps}
     \end{center}
     \caption{Accelerations estimations using kalman filter, kalman predictor and euler against the real values. As expected the euler approximation is much more noisy}
     \label{fig:hw3_acc}
 \end{figure}
+
+\noindent Finally the results obtained using the kalman smoother (offline estimations) for velocities and accelerations:
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.7]{images/vel_sm.eps}
+    \end{center}
+    \caption{Velocities estimations using kalman smoother}
+    \label{fig:vel_sm}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.7]{images/acc_sm.eps}
+    \end{center}
+    \caption{Accelerations estimations using kalman smoother}
+    \label{fig:hw3_acc_sm}
+\end{figure}
+
 
 \end{document}

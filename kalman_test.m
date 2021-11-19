@@ -86,3 +86,48 @@ hold on; plot(acc_euler); % very noisy
 hold on; plot(x_kalman_filter_ss(3,:),'.b');
 hold on; plot(x_kalman_predictor_ss(3,:),'.g');
 legend('acc euler', 'acc kalman filter ss', 'acc kalman predictor ss')
+
+%% Kalman smoother
+
+n = size(A,1);
+N = size(pos,1);
+
+xf{1} = zeros(n,1);
+xp{1} = zeros(n,1);
+Pp{1} = 0.01*eye(n,n);
+Pf{1} = 0.01*eye(n,n);
+
+for k=2:size(pos,1)-1
+    xp{k} = A*xf{k-1};
+    Pp{k} = ( A*Pf{k-1}*A' + Q +  (A*Pf{k-1}*A' + Q)')/2;
+    
+    K{k} = Pp{k}*C'*inv(C*Pp{k}*C' + R);
+    xf{k} = xp{k} + K{k}*(pos(k) - C*xp{k});
+    
+    Pf{k} = Pp{k} - Pp{k}*C'*inv(C*Pp{k}*C' + R)*C*Pp{k};
+    Pf{k} = (Pf{k} + Pf{k}')/2;
+end
+
+xs{N-1} = xf{N-1};
+Ps{N-1} = Pf{N-1};
+
+for k=size(pos,1)-2:-1:1
+    barK{k} = Pf{k}*A'*inv(Pp{k+1});
+    xs{k} = xf{k} + barK{k}*( xs{k+1} - xp{k+1} );
+    Ps{k} = Pf{k} + barK{k}*( Ps{k+1} - Pp{k+1} );
+end
+
+x_kalman_smoother = zeros(n,length(xs));
+for i=1:length(xs)
+    x_kalman_smoother(:,i) = xs{i};
+end
+
+figure;
+hold on; plot(vel_euler); % very noisy
+hold on; plot(x_kalman_smoother(2,:),'.r');
+legend('vel euler', 'vel kalman smoother')
+
+figure;
+hold on; plot(acc_euler); % very noisy
+hold on; plot(x_kalman_smoother(3,:),'.r');
+legend('acc euler', 'acc kalman smoother')
