@@ -77,6 +77,22 @@ hold on; plot(acc_euler); % very noisy
 hold on; plot(x_kalman_smoother(3,:),'r');
 legend('acc euler', 'acc kalman smoother')
 
+%% All in one
+
+figure;
+hold on; plot(x_kalman_filter(2,:),'b');
+hold on; plot(x_kalman_filter_ss(2,:),'b');
+hold on; plot(x_kalman_predictor(2,:),'g');
+hold on; plot(x_kalman_smoother(2,:),'r');
+legend('vel kalman filter', 'vel kalman filter ss', 'vel kalman predictor', 'vel kalman smoother')
+
+figure;
+hold on; plot(x_kalman_filter(3,:),'b');
+hold on; plot(x_kalman_filter_ss(3,:),'b');
+hold on; plot(x_kalman_predictor(3,:),'g');
+hold on; plot(x_kalman_smoother(3,:),'r');
+legend('acc kalman filter', 'acc kalman filter ss', 'acc kalman predictor', 'acc kalman smoother')
+
 %% Construction of simple low pass filter (discrete domain)
 s = tf('s');
 Fc = 10;
@@ -90,4 +106,3 @@ bode(G);
 hold on;
 P = c2d(G,Ts); % Move continuous to discrete
 bode(P);
-

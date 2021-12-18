@@ -37,16 +37,24 @@ beta_hat = inv(X' * X) * X' * Y;
 k_ls = 1 / beta_hat(2, 1);
 tau_ls = k_ls * beta_hat(1, 1);
 
+figure;
+plot(Y);
+hold on;
+plot(X*beta{N});
 fprintf("\nLeast square k = %f tau = %f\n", k_ls, tau_ls);
 
 %% Apply the recursive least square to get the DC motor parameters
 
-beta = recursive_least_square(Y, X);
+beta_rls = recursive_least_square(Y, X);
 N = length(Y);
 
-k_rls = 1 / beta{N}(2);
-tau_rls = k_ls * beta{N}(1);
+k_rls = 1 / beta_rls{N}(2);
+tau_rls = k_ls * beta_rls{N}(1);
 
+figure;
+plot(Y);
+hold on;
+plot(X*beta_rls{N});
 fprintf("\nRecursive least square k = %f tau = %f\n", k_rls, tau_rls);
 
 %% Apply the discrete adaptive algorithm for the estimation
@@ -57,4 +65,14 @@ N = length(Y);
 k_ad = 1 / beta_adaptive{N}(2);
 tau_ad = k_ad * beta_adaptive{N}(1);
 
+figure;
+plot(Y);
+hold on;
+plot(X*beta_adaptive{N});
 fprintf("\nAdaptive estimation k = %f tau = %f\n", k_ad, tau_ad);
+
+%% Compare LS with RLS
+
+plot(X*beta{N});
+hold on;
+plot(X*beta_rls{N});
