@@ -44,8 +44,8 @@ Be = 0; %100;
 Ke = 50; %200;
 
 % Inner force loop
-Cmf = 1;
-Csf = 1;
+Cmf = 0; %1;
+Csf = 0; %1;
 
 Ts = 0.001;
 

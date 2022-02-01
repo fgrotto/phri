@@ -15,12 +15,12 @@ Ph = 2010;
 Dh = 100;
 
 % Master controller
-Bm = 0.8;
-Km = 1;
+Bm = 0; % 0.8;
+Km = 0; %1;
 
 % Slave controllerxs
-Bs = 0.8*4;
-Ks = 4;
+Bs = 8; %0.8*4;
+Ks = 0; %4;
 
 % Intertia of robot dynamics
 Mm = 0.5;
@@ -41,7 +41,7 @@ Kh = 2000;
 % Environment impedance parameters
 Je = 0;
 Be = 0; %100;
-Ke = 50; %200;
+Ke = 220; %200;
 
 % Characteristic impedance
 b = 0.234;
