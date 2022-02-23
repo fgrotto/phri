@@ -9,10 +9,12 @@ Ts=0.001;
 % Calculate euler approximations of velocities and accelerations
 vel_euler = (pos(2:end)-pos(1:end-1))./Ts;
 acc_euler = (vel(2:end)-vel(1:end-1))./Ts;
+vel_euler = lowpass(vel_euler, 8, 1/Ts);
+acc_euler = lowpass(acc_euler, 5, 1/Ts);
 
 A=[1 Ts Ts^2/2; 0 1 Ts; 0 0 1];
 C=[1 0 0];
-q=15000;
+q=1000;
 Q=q*[Ts^3/6; Ts^2/2; Ts]*[Ts^3/6; Ts^2/2; Ts]';
 R=1;
 
@@ -27,16 +29,17 @@ x_kalman_filter=kalman_filter(x_filter_old, P_filter_old, pos, A, C, Q, R);
 x_kalman_predictor=kalman_predictor(x_predictor_old, P_predictor_old, pos, A, C, Q, R);
 
 figure;
-plot(vel);
+subplot(1,2,1);
+plot(vel)
 hold on; plot(vel_euler); % very noisy
-hold on; plot(x_kalman_filter(2,:),'b');
-hold on; plot(x_kalman_predictor(2,:),'g');
-legend('vel real','vel euler', 'vel kalman filter', 'vel kalman predictor')
+hold on; plot(x_kalman_filter(2,:));
+hold on; plot(x_kalman_predictor(2,:));
+legend('vel encoder', 'vel euler', 'vel kalman filter', 'vel kalman predictor')
 
-figure;
+subplot(1,2,2);
 hold on; plot(acc_euler); % very noisy
-hold on; plot(x_kalman_filter(3,:),'b');
-hold on; plot(x_kalman_predictor(3,:),'g');
+hold on; plot(x_kalman_filter(3,:));
+hold on; plot(x_kalman_predictor(3,:));
 legend('acc euler', 'acc kalman filter', 'acc kalman predictor')
 
 %% Kalman filter steady state and predictor steady state
@@ -80,18 +83,18 @@ legend('acc euler', 'acc kalman smoother')
 %% All in one
 
 figure;
-hold on; plot(x_kalman_filter(2,:),'b');
-hold on; plot(x_kalman_filter_ss(2,:),'b');
-hold on; plot(x_kalman_predictor(2,:),'g');
-hold on; plot(x_kalman_smoother(2,:),'r');
-legend('vel kalman filter', 'vel kalman filter ss', 'vel kalman predictor', 'vel kalman smoother')
+hold on; plot(x_kalman_filter(2,:));
+% hold on; plot(x_kalman_filter_ss(2,:),'b');
+hold on; plot(x_kalman_predictor(2,:));
+hold on; plot(x_kalman_smoother(2,:));
+legend('vel kalman filter', 'vel kalman predictor', 'vel kalman smoother')
 
 figure;
-hold on; plot(x_kalman_filter(3,:),'b');
-hold on; plot(x_kalman_filter_ss(3,:),'b');
-hold on; plot(x_kalman_predictor(3,:),'g');
-hold on; plot(x_kalman_smoother(3,:),'r');
-legend('acc kalman filter', 'acc kalman filter ss', 'acc kalman predictor', 'acc kalman smoother')
+hold on; plot(x_kalman_filter(3,:));
+% hold on; plot(x_kalman_filter_ss(3,:),'b');
+hold on; plot(x_kalman_predictor(3,:));
+hold on; plot(x_kalman_smoother(3,:));
+legend('acc kalman filter', 'acc kalman predictor', 'acc kalman smoother')
 
 %% Construction of simple low pass filter (discrete domain)
 s = tf('s');

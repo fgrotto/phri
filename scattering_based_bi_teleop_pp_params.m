@@ -14,16 +14,16 @@ delay = 1;
 Filter = 5; %Hz
 
 % Human intention controller (PI)
-Ph = 23;
-Dh = 0;
+Ph = 400;
+Dh = 1;
 
 % Master controller
-Bm = 0;
-Km = 2;
+Bm = 0.8;
+Km = 1;
 
-% Slave controller
-Bs = 3;
-Ks = 110;
+% Slave controllerxs
+Bs = 0.8*4;
+Ks = 4;
 
 % Inertia of robot dynamics
 Mm = 0.5;
@@ -52,7 +52,7 @@ Be = 10; %100;
 Ke = 200; %200;
 
 % Characteristic impedance
-b = 1;
+b = 0.9;
 
 % Sampling time
 Ts = 0.001;

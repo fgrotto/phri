@@ -11,8 +11,8 @@ Fip = 1;
 Fc = 1; 
 
 % Human intention controller (PI)
-Ph = 20100; %20000;
-Dh = 100; %1000;
+Ph = 50500; %20000;
+Dh = 500;
 
 % Master controller
 Bm = 0.8;
@@ -45,7 +45,7 @@ Ke = 50; %200;
 
 % Inner force loop
 Cmf = 0; %1;
-Csf = 0; %1;
+Csf = 0; %0.2;
 
 Ts = 0.001;
 

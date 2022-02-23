@@ -1,6 +1,6 @@
 function [x_kalman_filter]=kalman_filter(x_k_k,P_k_k,y,A,C,Q,R)
     for i=2:size(y,1)
-        % Prediction step (A priori estimation
+        % Prediction step (A priori estimation)
         x_kplus1_k = A*x_k_k;
         P_kplus1_k = A*P_k_k*A'+Q;
 

@@ -5,17 +5,22 @@ close all;
 % Input function amplitude parameter (sin or step with low pass filter)
 A = 1;
 % Low pass frequency cuff off
-Fip = 1;
+Fip = 10;
 % Sin frequency
 Fc = 1; 
 delay = 1;
 
 % Cut off frequency for filter after each discrete derivative
-Filter = 5; %Hz
+Filter = 100; %Hz
 
 % Human intention controller (PI)
 Ph = 23;
 Dh = 17;
+Ih = 20;
+
+% Master controller
+Bm = 0; %0.8;
+Km = 0; %1;
 
 % Slave controller
 Bs = 3;
@@ -37,7 +42,7 @@ Ds = 0;
 % Bh = 1.5;
 % Kh = 0;
 
-% Original human impedance parameters
+% Human impedance parameters
 Jh = 0.05;  %0.5;
 Bh = 1.5;   %70;
 Kh = 0;     %2000;
