@@ -29,7 +29,7 @@ dot_w = x_kalman_filter(3, :);
 
 % theta = [tau/k; 1/k]
 X = [w' dot_w'];
-Y = v;
+Y = lowpass(v, 5, 1/Ts);
 
 % compute the least square formulation
 beta_hat = inv(X' * X) * X' * Y;
@@ -37,24 +37,37 @@ beta_hat = inv(X' * X) * X' * Y;
 k_ls = 1 / beta_hat(2, 1);
 tau_ls = k_ls * beta_hat(1, 1);
 
+time = 0:1:length(Y);
+time = time*Ts;
 figure;
-plot(Y);
+plot(time(1:end-1), Y);
 hold on;
-plot(X*beta{N});
+plot(time(1:end-1), X*beta_hat);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'ls');
 fprintf("\nLeast square k = %f tau = %f\n", k_ls, tau_ls);
 
 %% Apply the recursive least square to get the DC motor parameters
 
-beta_rls = recursive_least_square(Y, X);
+lambda = 1;
+beta_rls = recursive_least_square(Y, X, lambda);
 N = length(Y);
 
 k_rls = 1 / beta_rls{N}(2);
 tau_rls = k_ls * beta_rls{N}(1);
 
+for i = 1:length(beta_rls)
+    y_rls(i,:) = X(i,:)*beta_rls{i};
+end
+
 figure;
-plot(Y);
+plot(time(1:end-1), Y);
 hold on;
-plot(X*beta_rls{N});
+plot(time(1:end-1), y_rls);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'rls');
 fprintf("\nRecursive least square k = %f tau = %f\n", k_rls, tau_rls);
 
 %% Apply the discrete adaptive algorithm for the estimation
@@ -65,14 +78,63 @@ N = length(Y);
 k_ad = 1 / beta_adaptive{N}(2);
 tau_ad = k_ad * beta_adaptive{N}(1);
 
+for i = 1:length(beta_adaptive)
+    y_ad(i,:) = X(i,:)*beta_adaptive{i};
+end
+
 figure;
-plot(Y);
+plot(time(1:end-1),Y);
 hold on;
-plot(X*beta_adaptive{N});
+plot(time(1:end-1),y_ad);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'adaptive');
 fprintf("\nAdaptive estimation k = %f tau = %f\n", k_ad, tau_ad);
 
-%% Compare LS with RLS
+%% Compare Models
 
-plot(X*beta{N});
+figure;
+subplot(1,3,1);
+plot(time(1:end-1), Y);
 hold on;
-plot(X*beta_rls{N});
+plot(time(1:end-1), X*beta_hat);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'ls');
+
+subplot(1,3,2);
+plot(time(1:end-1), Y);
+hold on;
+plot(time(1:end-1), y_rls);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'rls');
+
+subplot(1,3,3);
+plot(time(1:end-1),Y);
+hold on;
+plot(time(1:end-1), y_ad);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'adaptive');
+
+% Forgetting factor
+
+lambda = 0.95;
+beta_rls_f = recursive_least_square(Y, X, lambda);
+
+for i = 1:length(beta_rls_f)
+    y_rls_f(i,:) = X(i,:)*beta_rls_f{i};
+end
+
+figure;
+plot(time(1:end-1), Y);
+hold on;
+plot(time(1:end-1), y_rls);
+hold on;
+plot(time(1:end-1), y_rls_f);
+ylabel('y [model]');
+xlabel('time [s]');
+legend('model', 'rls lambda 1', 'rls lambda 0.9');
+
+

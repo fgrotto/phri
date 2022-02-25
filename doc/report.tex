@@ -256,7 +256,7 @@ Derive the hybrid matrix for the four channel bilateral teleoperation considerin
     \overline{H_{22}} = \frac{(1+C_{sf})(1+C_{mf})-C_2C_3}{(1+C_{mf})Z_{cs}-C_3C_4}
 \]
 
-\subsection{HW 3-4: Kalman Filter, Predictor and Smoother}
+\section{HW 3-4: Kalman Filter, Predictor and Smoother}
 In this section we are briefy going to consider the following estimation problems:
 \begin{itemize}
     \item \textbf{Filtering} estimate $\hat{s}(t)$ using measurements till time t
@@ -307,36 +307,93 @@ when k goes to infinity we can consider the steady-state kalman filter which use
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.7]{images/velocities.eps}
+        \hspace*{-4.6cm}
+        \includegraphics[scale=0.5]{images/kalman_filter.eps}
     \end{center}
-    \caption{Velocities estimations using kalman filter, kalman predictor and euler against the real values. As expected the euler approximation is much more noisy}
-    \label{fig:hw3_vel}
+    \caption{Velocities and accelerations estimations using Kalman filter, Kalman filter in steady state conditions and euler approximations with 5Hz low pass filter. As it is visible at the beginning the Kalman filter is different from the steady state version.}
+    \label{fig:kalman_filter}
 \end{figure}
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.7]{images/acc.eps}
+        \hspace*{-4.6cm}
+        \includegraphics[scale=0.5]{images/kalman_predictor.eps}
     \end{center}
-    \caption{Accelerations estimations using kalman filter, kalman predictor and euler against the real values. As expected the euler approximation is much more noisy}
-    \label{fig:hw3_acc}
+    \caption{Velocities and accelerations estimations using Kalman predictor, Kalman predictor in steady state conditions and euler approximations with 5Hz low pass filter. As it is visible at the beginning the Kalman predictor is different from the steady state version.}
+    \label{fig:kalman_predictor}
 \end{figure}
 
-\noindent Finally the results obtained using the kalman smoother (offline estimations) for velocities and accelerations:
+In Fig \ref{fig:kalman_smoother} the use of the kalman smoother is reported. Informally, thanks to both forward (Kalman filter) and backward (smoothing) steps the Kalman smoother in general performs a better estimation for the given dataset.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.7]{images/vel_sm.eps}
+        \hspace*{-4.6cm}
+        \includegraphics[scale=0.5]{images/kalman_smoother.eps}
     \end{center}
-    \caption{Velocities estimations using kalman smoother}
-    \label{fig:vel_sm}
+    \caption{Velocities and accelerations estimations using Kalman filter and Kalman Smoother}
+    \label{fig:kalman_smoother}
+\end{figure}
+\section{HW 5: Least Square, RLS and Adaptive Estimation}
+The aim of this section is to present three techniques to solve a gray-box indentification problem meaning that the class of the model is known but the specific parameters are unknown. If we consider a linear model:
+\[
+    y = x\beta \qquad \textit{for example a DC motor} \qquad V(t) = \begin{bmatrix}
+        \dot{w}(t) & w(t) 
+    \end{bmatrix} \begin{bmatrix}
+        \tau/k \\ 1/k
+    \end{bmatrix}
+\]
+the aim is to find the prediction:
+\[
+    \hat{y} = x \hat{\beta}
+\]
+where $\hat{\beta} \in \mathbb{R}^m$ is the matrix of coefficients that we have to determine.
+
+\bigskip
+\noindent The following methods are reported:
+\begin{itemize}
+    \item \textbf{Least square solution} $\hat{\beta} = (X^TX)^{-1}X^TY$ if $X^TX$ is nonsingular
+    \item \textbf{Adaptive algorithm} $\hat{\beta}(k) = \hat{\beta}(k-1) + T_sgx^T(k)e(k)$ with $g > 0$. Basically we are moving in the opposite direction of the gradient of the minimized square error.
+    \item \textbf{Recursive Least square} by solving the causal formulation:
+\end{itemize}
+\[
+    \begin{cases}
+        e(k) = y_k -x_k\hat{\beta}(k-1) \\
+        P(k) = \frac{1}{\lambda} \left ( P(k-1) - \frac{P(k-1)x_k^Tx_kP(k-1)}{\lambda + x_kP(k-1)x_k^T}\right) \\ 
+        K(k) = P(k)x_k^T \\
+        \hat{\beta}(k) = \hat{\beta}(k-1) + K(k)e(k) 
+    \end{cases}
+\]
+where $0 < \lambda \leq 1 $ is called forgetting factor
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.3]{images/ls.eps}
+    \end{center}
+    \caption{Least square estimation of the DC model of the motor}
+    \label{fig:ls}
 \end{figure}
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[scale=0.7]{images/acc_sm.eps}
+        \includegraphics[scale=0.3]{images/rls.eps}
     \end{center}
-    \caption{Accelerations estimations using kalman smoother}
-    \label{fig:hw3_acc_sm}
+    \caption{Recursive Least square estimation of the DC model of the motor}
+    \label{fig:rls}
 \end{figure}
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.3]{images/adaptive.eps}
+    \end{center}
+    \caption{Adaptive estimation of the DC model of the motor}
+    \label{fig:adaptive}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.3]{images/rls_forget.eps}
+    \end{center}
+    \caption{Recursive Least square with forgetting factor of the DC model of the motor}
+    \label{fig:rls_f}
+\end{figure}
 
 \end{document}
