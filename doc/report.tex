@@ -265,7 +265,7 @@ In this section we are briefy going to consider the following estimation problem
 \end{itemize}
 \bigskip
 
-Our aim is to estimate the velocities and accelerations from noisy position measurements. Some samples were provided for the task and the kalman filter and predictor were implemented as well as the steady state versions. In Fig \ref{fig:hw3_vel} and in Fig \ref{fig:hw3_acc} the estimations of velocities and accelerations are reported. The theory behind the kalman filter and predictor is not fully reported. Let's derive the discretized model for the position, velocities and accelerations to use in the kalman filter:
+Our aim is to estimate the velocities and accelerations from noisy position measurements. Some samples were provided for the task and the kalman filter and predictor were implemented as well as the steady state versions. The theory behind the kalman filter and predictor is not fully reported. Let's derive the discretized model for the position, velocities and accelerations to use in the kalman filter:
 
 \begin{equation}
     \dot{x}(t) =  \begin{bmatrix}  0&1&0 \\ 0&0&1\\0&0&0 \end{bmatrix} x(t) + \begin{bmatrix}  0\\0\\1 \end{bmatrix} w(t)
@@ -396,4 +396,42 @@ where $0 < \lambda \leq 1 $ is called forgetting factor
     \label{fig:rls_f}
 \end{figure}
 
+\section{Scattering based bilateral teleoperation architecture}
+The core ideas in this architecture were described by Niemeyer and Slotine in Stable Adaptive Teleoperation (1991). The paper was \begin{quote}
+    a preliminary study on how the existence of time-delays affects the application of advanced control shcemes to effective force-reflecting telerobotic systems.
+\end{quote}
+
+The fondamental ideas are developed in the context of passivity formalism which
+\begin{quote}
+    represents a mathematical description of the intuitive physical concepts of power and energy. It provides a simple and robust tool to analyze the stability of a nonlinear system while maintaining global stability properties.
+\end{quote}
+A system is said passive if:
+\[
+    P = x^Ty = \frac{dE}{dt} + P_{diss}
+\]
+and it is also true that:
+\[
+    \int_{0}^{t} P \,d\tau = \int_{0}^{t} x^Ty \,d\tau = E(t) - E(0) + \int_{0}^{t} P_{diss} \,d\tau \geq -E(0) = \text{constant}
+\]
+
+The interesting properties of passivity formulations are its closure properties via feedback or parallel configuration. Moreover 
+
+\begin{quote}
+    the use of passivity is a sufficient condition for the stability of the system coupled to a passive environment with a bounded operator input energy.
+\end{quote}
+
+The wave variable formulation, formally treated in scattering theory, is introduced. In this context a system is passive if the energy provided by the output waves is limited to the energy received via input waves
+\[
+    \int_{0}^{t} \frac{1}{2}v^Tv \,d\tau \leq \int_{0}^{t} \frac{1}{2}u^Tu \,d\tau 
+\]
+The transformations used to map $(\dot{x},F)$ into $(u,v)$ are:
+\[
+    u_l = \frac{1}{\sqrt{2b}}(F_l + b \dot{x_l}) \qquad u_r = \frac{1}{\sqrt{2b}}(F_r - b \dot{x_r}) 
+\]
+
+\[
+    v_l = \frac{1}{\sqrt{2b}}(F_l - b \dot{x_l}) \qquad v_r = \frac{1}{\sqrt{2b}}(F_r + b \dot{x_r}) 
+\]
+they can be used to extract the desired configurations based on the signal provided such as forces or velocities.
+\subsection{Scattering based PF}
 \end{document}

@@ -23,8 +23,8 @@ Bm = 0; %0.8;
 Km = 0; %1;
 
 % Slave controller
-Bs = 80;
-Ks = 100;
+Bs = 40;
+Ks = 50;
 
 % Inertia of robot dynamics
 Mm = 0.5;
@@ -44,7 +44,7 @@ Ds = 0;
 
 % Human impedance parameters
 Jh = 0;  %0.5;
-Bh = 1.5;%1.5;   %70;
+Bh = 1.5;   %70;
 Kh = 1;     %2000;
 
 % Environment impedance parameters
@@ -52,8 +52,14 @@ Je = 0;
 Be = 10; %100;
 Ke = 200; %200;
 
-% Characteristic impedance
-b = 1;
+alpha = 1;
+beta = 0.2;
+h_limit = 1;
+H_master_init = 100;
+H_slave_init = 100;
 
 % Sampling time
 Ts = 0.001;
+
+VarianceForces = 0.01;
+VarianceVelocities = 0.00001;

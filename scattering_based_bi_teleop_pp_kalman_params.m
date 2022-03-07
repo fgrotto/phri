@@ -11,20 +11,20 @@ Fc = 0.1;
 delay = 1;
 
 % Cut off frequency for filter after each discrete derivative
-Filter = 100; %Hz
+Filter = 10; %Hz
 
 % Human intention controller (PI)
-Ph = 5;
+Ph = 6;
 Dh = 0;
 Ih = 2;
 
 % Master controller
-Bm = 0; %0.8;
-Km = 0; %1;
+Bm = 15; %0.8;
+Km = 10; %1;
 
 % Slave controller
-Bs = 80;
-Ks = 100;
+Bs = 50; %50;
+Ks = 80; %800;
 
 % Inertia of robot dynamics
 Mm = 0.5;
@@ -43,8 +43,8 @@ Ds = 0;
 % Kh = 0;
 
 % Human impedance parameters
-Jh = 0;  %0.5;
-Bh = 1.5;%1.5;   %70;
+Jh = 0;     %0.5;
+Bh = 1.5;   %70;
 Kh = 1;     %2000;
 
 % Environment impedance parameters
@@ -57,3 +57,6 @@ b = 1;
 
 % Sampling time
 Ts = 0.001;
+
+VarianceForces = 0.01;
+VarianceVelocities = 0.00001;

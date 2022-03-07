@@ -5,25 +5,26 @@ close all;
 % Input function amplitude parameter (sin or step with low pass filter)
 A = 1;
 % Low pass frequency cuff off
-Fip = 1;
+Fip = 5;
 % Sin frequency
-Fc = 1; 
+Fc = 0.1; 
 delay = 1;
 
 % Cut off frequency for filter after each discrete derivative
-Filter = 5; %Hz
+Filter = 10; %Hz
 
 % Human intention controller (PI)
-Ph = 400;
-Dh = 1;
+Ph = 5;
+Dh = 0;
+Ih = 2;
 
 % Master controller
-Bm = 0.8;
-Km = 1;
+Bm = 15; %0.8;
+Km = 10; %1;
 
-% Slave controllerxs
-Bs = 0.8*4;
-Ks = 4;
+% Slave controller
+Bs = 50; %50;
+Ks = 110; %800;
 
 % Inertia of robot dynamics
 Mm = 0.5;
@@ -41,10 +42,10 @@ Ds = 0;
 % Bh = 1.5;
 % Kh = 0;
 
-% Original human impedance parameters
-Jh = 0.05;  %0.5;
+% Human impedance parameters
+Jh = 0;  %0.5;
 Bh = 1.5;   %70;
-Kh = 0;     %2000;
+Kh = 1;     %2000;
 
 % Environment impedance parameters
 Je = 0;
@@ -52,15 +53,10 @@ Be = 10; %100;
 Ke = 200; %200;
 
 % Characteristic impedance
-b = 0.9;
+b = 1;
 
 % Sampling time
 Ts = 0.001;
 
-%% Slave tuning
-s = tf('s');
-P = 1/(Ms*s);
-C = Ks+Bs/s;
-
-T = (C*P)/(1+C*P);
-step(T)
+VarianceForces = 0.01;
+VarianceVelocities = 0.00001;

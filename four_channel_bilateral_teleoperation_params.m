@@ -50,7 +50,7 @@ Csf = 0; %0.2;
 Ts = 0.001;
 
 VarianceForces = 0.01;
-VarianceVelocities = 0.000001;
+VarianceVelocities = 0.001;
 
 % s = tf('s');
 % Zm = Mm*s+Dm;

@@ -52,8 +52,14 @@ Je = 0;
 Be = 10; %100;
 Ke = 200; %200;
 
-% Characteristic impedance
-b = 1;
+alpha = 1;
+beta = 0.2;
+h_limit = 1;
+H_master_init = 100;
+H_slave_init = 100;
 
 % Sampling time
 Ts = 0.001;
+
+VarianceForces = 0.01;
+VarianceVelocities = 0.00001;
