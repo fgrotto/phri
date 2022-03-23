@@ -8,11 +8,11 @@ A = 1;
 % Low pass frequency cuff off
 Fip = 1;
 % Sin frequency
-Fc = 1; 
+Fc = 0.5; 
 
 % Human intention controller (PI)
-Ph = 50500; %20000;
-Dh = 500;
+Ph = 50;
+Dh = 40;
 
 % Master controller
 Bm = 0.8;
@@ -34,14 +34,14 @@ Dm = 0;
 Ds = 0;
 
 % Human impedance parameters
-Jh = 0.5;
-Bh = 70;
-Kh = 2000;
+Jh = 0; %0.5;
+Bh = 1.5; %70;
+Kh = 1; %2000;
 
 % Environment impedance parameters
 Je = 0;
 Be = 0; %100;
-Ke = 50; %200;
+Ke = 200; %50; %200;
 
 % Inner force loop
 Cmf = 0; %1;
@@ -49,8 +49,8 @@ Csf = 0; %0.2;
 
 Ts = 0.001;
 
-VarianceForces = 0.01;
-VarianceVelocities = 0.001;
+VarianceForces = 0;
+VarianceVelocities = 0;
 
 % s = tf('s');
 % Zm = Mm*s+Dm;

@@ -8,7 +8,7 @@ A = 1;
 Fip = 5;
 % Sin frequency
 Fc = 0.1; 
-delay = 1;
+delay = 2;
 
 % Cut off frequency for filter after each discrete derivative
 Filter = 100; %Hz
@@ -23,8 +23,8 @@ Bm = 0; %0.8;
 Km = 0; %1;
 
 % Slave controller
-Bs = 80;
-Ks = 100;
+Bs = 40;
+Ks = 50;
 
 % Inertia of robot dynamics
 Mm = 0.5;
@@ -44,7 +44,7 @@ Ds = 0;
 
 % Human impedance parameters
 Jh = 0;  %0.5;
-Bh = 1.5;%1.5;   %70;
+Bh = 1.5;   %70;
 Kh = 1;     %2000;
 
 % Environment impedance parameters
@@ -52,11 +52,11 @@ Je = 0;
 Be = 10; %100;
 Ke = 200; %200;
 
-alpha = 1;
-beta = 0.2;
-h_limit = 1;
-H_master_init = 100;
-H_slave_init = 100;
+alpha = 0.1;
+beta = 0.01;
+h_limit = 0.5;
+H_master_init = 0;
+H_slave_init = 0;
 
 % Sampling time
 Ts = 0.001;

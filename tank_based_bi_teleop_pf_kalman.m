@@ -52,11 +52,11 @@ Je = 0;
 Be = 10; %100;
 Ke = 200; %200;
 
-alpha = 1;
-beta = 0.2;
+alpha = 0.1;
+beta = 0.01;
 h_limit = 1;
-H_master_init = 100;
-H_slave_init = 100;
+H_master_init = 0;
+H_slave_init = 0;
 
 % Sampling time
 Ts = 0.001;

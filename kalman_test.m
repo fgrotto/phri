@@ -72,6 +72,7 @@ time = time*Ts;
 figure;
 subplot(1,2,1);
 plot(time, vel)
+grid on;
 hold on; plot(time(1:end-1),vel_euler); % very noisy
 hold on; plot(time,x_kalman_filter(2,:));
 hold on; plot(time,x_kalman_filter_ss(2,:));
@@ -80,6 +81,7 @@ xlabel('time [s]');
 legend('vel encoder', 'vel euler', 'vel kalman filter', 'vel kalman filter ss')
 
 subplot(1,2,2);
+grid on;
 hold on; plot(time(1:end-1), acc_euler); % very noisy
 hold on; plot(time, x_kalman_filter(3,:));
 hold on; plot(time, x_kalman_filter_ss(3,:));
@@ -91,6 +93,7 @@ legend('acc euler', 'acc kalman filter', 'acc kalman filter ss')
 figure;
 subplot(1,2,1);
 plot(time, vel)
+grid on;
 hold on; plot(time(1:end-1),vel_euler); % very noisy
 hold on; plot(time,x_kalman_predictor(2,:));
 hold on; plot(time,x_kalman_predictor_ss(2,:));
@@ -99,6 +102,7 @@ xlabel('time [s]');
 legend('vel encoder', 'vel euler', 'vel kalman predictor', 'vel kalman predictor ss')
 
 subplot(1,2,2);
+grid on;
 hold on; plot(time(1:end-1), acc_euler); % very noisy
 hold on; plot(time, x_kalman_predictor(3,:));
 hold on; plot(time, x_kalman_predictor_ss(3,:));
@@ -113,6 +117,7 @@ x_kalman_smoother=kalman_smoother(x_predictor_old, P_predictor_old, pos, A, C, Q
 
 figure;
 subplot(1,2,1);
+grid on;
 hold on; plot(time(1:end-1),vel_euler); % very noisy
 hold on; plot(time,x_kalman_filter(2,:));
 hold on; plot(time,x_kalman_smoother(2,:));
@@ -121,6 +126,7 @@ xlabel('time [s]');
 legend('vel euler', 'vel kalman filter', 'vel kalman smoother')
 
 subplot(1,2,2);
+grid on;
 hold on; plot(time(1:end-1), acc_euler); % very noisy
 hold on; plot(time, x_kalman_filter(3,:));
 hold on; plot(time, x_kalman_smoother(3,:));

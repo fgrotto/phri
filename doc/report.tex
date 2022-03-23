@@ -11,7 +11,7 @@
 \usepackage{kpfonts}
 \usepackage{mathpazo}
 \usepackage{enumitem}
-\setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
+% \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
 \begin{document}
 \author{Filippo Grotto VR460638}
@@ -86,7 +86,7 @@ The higher the bandwidth of the transparency, the larger the degree of teleprese
 
 \section{Four channel bilateral teleoperation architecture}
 
-This architecture was described by Dale A. Lawrence in \textit{Stability and Transparency in Bilateral Teleoperation}. There are 4 channeels meaning two signals from master to save and two signals from slave to master. However this architecturee caan be specialized to obtainother teleoperationschemees according to available sensors. It is based on some assumptions:
+This architecture was described by Dale A. Lawrence in \textit{Stability and Transparency in Bilateral Teleoperation}. There are 4 channeels meaning two signals from master to slave and two signals from slave to master. However this architecture can be specialized to obtain other teleoperation schemees according to available sensors. It is based on some assumptions:
 \begin{itemize}
     \item No communication delays between slave side and master side
     \item Perfect knowledge of the master and slave robot dynamics
@@ -103,7 +103,8 @@ Considering the conditions for perfect transparency of Hannaford hybrid matrix (
 \]
 Moreover it is possible to set $C_2 < 1$ to reduce operator's fatigue or $C_2 > 1$ to increase operator's level of sensitivity. 
 
-Moreover if we consider inner force controller the perfect transparency requires:
+\bigskip
+\noindent Moreover if we consider inner force controller the perfect transparency requires:
 \[
 \begin{cases}
     C_3 = 1 + C_{sf}\\
@@ -123,7 +124,7 @@ Force and position feedback act in oppositve ways, in the sense that one softens
     \label{fig:four_channel}
 \end{figure}
 
-\subsection{HW 1: Continuous and discretized implementation}
+\subsection{Continuous and discretized implementation}
 Implement the SISO Four-channel bilateral teleoperation architecture with
 \[
     C_m = B_m + \frac{K_m}{s} \quad
@@ -144,8 +145,8 @@ G_s = \frac{1}{M_ss^2+B_ss+K_s}
 
 \begin{figure}[H]
     \begin{center}
-        \hspace*{-4.2cm}
-        \includegraphics[scale=0.4]{images/four_free_motion.eps}
+        \hspace*{-4.4cm}
+        \includegraphics[scale=0.5]{images/four_free_motion.eps}
     \end{center}
     \caption{4 channel architecture in free motion with a sinusoidal reference}
     \label{fig:four_free}
@@ -153,27 +154,31 @@ G_s = \frac{1}{M_ss^2+B_ss+K_s}
 
 \bigskip
 \noindent The proper parameters were selected considering the step reponse of the two second order systems. For the human intention controller the parameters were selected by comparing the reference position with the master/slave position and perform proper tuning (an analytical closed-loop system might also be considered for this analysis).
-\bigskip 
+
+\bigskip
+The environment is a pure stiffness $K_e = 200$ but also other scenario has been considered. The reference is sinusoidal function with unitary amplitude and frequency 0.1Hz
 
 \begin{figure}[H]
     \begin{center}
-        \hspace*{-4.2cm}
-        \includegraphics[scale=0.4]{images/four_contact_05.eps}
+        \hspace*{-4.4cm}
+        \includegraphics[scale=0.5]{images/four_contact_05.eps}
     \end{center}
-    \caption{4 channel architecture in contact at 0.5 with a sinusoidal reference}
+    \caption{4 channel architecture in contact at 0.8 with a sinusoidal reference}
     \label{fig:four_cotact}
 \end{figure}
 
+In Fig \ref{fig:four_cotact} it is visible the transparency effect at contact $f_e=f_h$. The initial oscillations come from the tuning of the human controller. As it is visible the environment changes the behaviour of the master if we compare it with Fig \ref{fig:four_free}.
+
 \begin{figure}[H]
     \begin{center}
-        \hspace*{-4.2cm}
-        \includegraphics[scale=0.4]{images/four_step_contact_05.eps}
+        \hspace*{-4.4cm}
+        \includegraphics[scale=0.5]{images/four_step_contact_05.eps}
     \end{center}
-    \caption{4 channel architecture in contact at 0.5 with a step reference}
+    \caption{4 channel architecture in contact at 0.8 with a step reference}
     \label{fig:four_step}
 \end{figure}
 
-As it is visible in Fig \ref{fig:four_free} the architecture is correctly following the reference provided. There is however a large effect due to the initial motion in all the presented figures due to high gain. In Fig \ref{fig:four_cotact} the contact interaction is clearly visible in the forces plot when the position reaches 0.5. 
+As it is visible in Fig \ref{fig:four_free} the architecture is correctly following the reference provided. There is however a large effect due to the initial motion in all the presented figures due to high gain. In Fig \ref{fig:four_cotact} the contact interaction is clearly visible in the forces plot when the position reaches 0.8. 
 
 Finally the Fig \ref{fig:four_step} gives an idea of the reponse of the system to a step function and Fig \ref{fig:four_noisy} emphasises the problem related to estimation of velocity and accelerations with noisy measurements. Moreover the inner force feedback can be introduced as constants and be properly tuned as desired.
 
@@ -182,13 +187,16 @@ Finally the Fig \ref{fig:four_step} gives an idea of the reponse of the system t
         \hspace*{-4.2cm}
         \includegraphics[scale=0.4]{images/four_noisy.eps}
     \end{center}
-    \caption{Four channel architecture with white noise}
+    \caption{Four channel architecture with white noise. The sinusoidal reference is much faster in this case}
     \label{fig:four_noisy}
 \end{figure}
 
 \noindent The entire architecture was translated in the related discretized version according to our specification in terms of encoders and the related derivative were performed using the simulink block. In the following section kalman filters will be introduced and they will be used to filter noisy estimations of velocities and accelerations.
 
-\subsection{HW 2: Derive hybrid matrix}
+\bigskip
+\noindent The inner force loops in this architecture don't produce really different results so the related plots are not reported. 
+
+\subsection{Derive the hybrid matrix}
 
 Derive the hybrid matrix for the four channel bilateral teleoperation considering the inner force loop at the master and slave side. We can directly consider Fig \ref{fig:four_channel}.
 
@@ -256,7 +264,7 @@ Derive the hybrid matrix for the four channel bilateral teleoperation considerin
     \overline{H_{22}} = \frac{(1+C_{sf})(1+C_{mf})-C_2C_3}{(1+C_{mf})Z_{cs}-C_3C_4}
 \]
 
-\section{HW 3-4: Kalman Filter, Predictor and Smoother}
+\section{Kalman Filter, Predictor and Smoother}
 In this section we are briefy going to consider the following estimation problems:
 \begin{itemize}
     \item \textbf{Filtering} estimate $\hat{s}(t)$ using measurements till time t
@@ -285,7 +293,7 @@ Our aim is to estimate the velocities and accelerations from noisy position meas
 \]
 
 It is important to notice the presence of two variance matrixes $R$ related to $v_k$ and $Q$ related to $w_k$. The variance matrix $R$ also called noise variance depends on the sensors whereas the variance
-matrix $Q$ also caled model variance is chosen in order to explain the measurements as well as
+matrix $Q$ also called model variance is chosen in order to explain the measurements as well as
 possible. They are crucial for proper tuning of the kalman filter.
 
 \bigskip
@@ -332,7 +340,7 @@ In Fig \ref{fig:kalman_smoother} the use of the kalman smoother is reported. Inf
     \caption{Velocities and accelerations estimations using Kalman filter and Kalman Smoother}
     \label{fig:kalman_smoother}
 \end{figure}
-\section{HW 5: Least Square, RLS and Adaptive Estimation}
+\section{Least Square, RLS and Adaptive Estimation}
 The aim of this section is to present three techniques to solve a gray-box indentification problem meaning that the class of the model is known but the specific parameters are unknown. If we consider a linear model:
 \[
     y = x\beta \qquad \textit{for example a DC motor} \qquad V(t) = \begin{bmatrix}
@@ -376,7 +384,7 @@ where $0 < \lambda \leq 1 $ is called forgetting factor
     \begin{center}
         \includegraphics[scale=0.3]{images/rls.eps}
     \end{center}
-    \caption{Recursive Least square estimation of the DC model of the motor}
+    \caption{Recursive least square estimation of the DC model of the motor}
     \label{fig:rls}
 \end{figure}
 
@@ -392,7 +400,7 @@ where $0 < \lambda \leq 1 $ is called forgetting factor
     \begin{center}
         \includegraphics[scale=0.3]{images/rls_forget.eps}
     \end{center}
-    \caption{Recursive Least square with forgetting factor of the DC model of the motor}
+    \caption{Recursive least square with forgetting factor of the DC model of the motor}
     \label{fig:rls_f}
 \end{figure}
 
@@ -414,13 +422,13 @@ and it is also true that:
     \int_{0}^{t} P \,d\tau = \int_{0}^{t} x^Ty \,d\tau = E(t) - E(0) + \int_{0}^{t} P_{diss} \,d\tau \geq -E(0) = \text{constant}
 \]
 
-The interesting properties of passivity formulations are its closure properties via feedback or parallel configuration. Moreover 
+\noindent The interesting properties of passivity formulations are its closure properties via feedback or parallel configuration. Moreover 
 
 \begin{quote}
     the use of passivity is a sufficient condition for the stability of the system coupled to a passive environment with a bounded operator input energy.
 \end{quote}
 
-The wave variable formulation, formally treated in scattering theory, is introduced. In this context a system is passive if the energy provided by the output waves is limited to the energy received via input waves
+\noindent The wave variable formulation, formally treated in scattering theory, is introduced. In this context a system is passive if the energy provided by the output waves is limited to the energy received via input waves
 \[
     \int_{0}^{t} \frac{1}{2}v^Tv \,d\tau \leq \int_{0}^{t} \frac{1}{2}u^Tu \,d\tau 
 \]
@@ -433,5 +441,96 @@ The transformations used to map $(\dot{x},F)$ into $(u,v)$ are:
     v_l = \frac{1}{\sqrt{2b}}(F_l - b \dot{x_l}) \qquad v_r = \frac{1}{\sqrt{2b}}(F_r + b \dot{x_r}) 
 \]
 they can be used to extract the desired configurations based on the signal provided such as forces or velocities.
-\subsection{Scattering based PF}
+
+\newpage
+\subsection{Scattering based Position-Force}
+
+The idea of the scattering based PF is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the scattering based architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+
+\bigskip
+In Fig \ref{fig:scat_pf_free} the free motion case is reported. As it is visible the system is stable and there is a minimal delay in the position compared to reference $x_d$.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scat_pf_free.eps}
+    \end{center}
+    \caption{Scattering based PF in free motion}
+    \label{fig:scat_pf_free}
+\end{figure}
+
+\newpage
+In Fig \ref{fig:scat_pf_contact} the contact case is reported. As it is visible there is some "noise" in the velocities and forces plots: the low pass filter implemented in the communication channel can leverage this problem by decreasing the cut-off frequency. A cut-off frequency of 10 Hz was used to produce the figure.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scat_pf_contact.eps}
+    \end{center}
+    \caption{Scattering based PF in contact with a stiff environment at 0.8}
+    \label{fig:scat_pf_contact}
+\end{figure}
+
+In Fig \ref{fig:scat_pf_contact_kalman} some noise measurements are added, both on velocities and forces, to the architecture as well as a kalman filter to get position and velocity estimations both at master and slave side. Finally the internal low pass filter in the communication channel was introduced with a cut-off frequency of 10Hz. As it is visible both the velocities and the forces are affected by noise.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scatt_pf_contact_kalman.eps}
+    \end{center}
+    \caption{Scattering based PF with noisy measurements and kalman filters in contact with a stiff environment at 0.8}
+    \label{fig:scat_pf_contact_kalman}
+\end{figure}
+
+In all the previous plots the scattering variables were not considered. For simplicity they are reported only once in a contact case in Fig \ref{fig:scat_var}.
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scatt_pf.eps}
+    \end{center}
+    \caption{Scattering based PF variables: they should be identical thanks to the scattering formulation. As it is visible there are some numerical errors corrected partially using a low pass filter in the communication channel}
+    \label{fig:scat_var}
+\end{figure}
+
+\newpage
+
+\subsection{Scattering based Position-Position}
+
+The idea of the scattering based PP is to use the master and slave force measurements and use the scattering transformations to obtain the velocites on both sides. In this way we have a velocity controller on both slave and master. In this scenario the scattering based architecture Position-Position was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+
+\bigskip
+In Fig \ref{fig:scat_pp_free} the free motion case is reported. As it is visible the system is stable and there is a minimal delay in the position compared to reference $x_d$.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scat_pp_free.eps}
+    \end{center}
+    \caption{Scattering based PP in free motion}
+    \label{fig:scat_pp_free}
+\end{figure}
+
+\newpage
+In Fig \ref{fig:scat_pp_contact} the contact case is reported. As it is visible there is some "noise" in the velocities and forces plots: the low pass filter implemented in the communication channel can leverage this problem by decreasing the cut-off frequency. A cut-off frequency of 10 Hz was used to produce the figure.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scat_pp_contact.eps}
+    \end{center}
+    \caption{Scattering based PP in contact with a stiff environment at 0.8}
+    \label{fig:scat_pp_contact}
+\end{figure}
+
+In Fig \ref{fig:scat_pp_contact_kalman} some noise measurements are added, both on velocities and forces, to the architecture as well as a kalman filter to get position and velocity estimations both at master and slave side. Finally the internal low pass filter in the communication channel was introduced with a cut-off frequency of 10Hz. As it is visible both the velocities and the forces are affected by noise.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scat_pp_contact_kalman.eps}
+    \end{center}
+    \caption{Scattering based PP with noisy measurements and kalman filters in contact with a stiff environment at 0.8 and delay 2 time steps}
+    \label{fig:scat_pp_contact_kalman}
+\end{figure}
+
 \end{document}
