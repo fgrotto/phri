@@ -406,7 +406,7 @@ where $0 < \lambda \leq 1 $ is called forgetting factor
 
 \section{Scattering based bilateral teleoperation architecture}
 The core ideas in this architecture were described by Niemeyer and Slotine in Stable Adaptive Teleoperation (1991). The paper was \begin{quote}
-    a preliminary study on how the existence of time-delays affects the application of advanced control shcemes to effective force-reflecting telerobotic systems.
+    a preliminary study on how the existence of time-delays affects the application of advanced control schemes to effective force-reflecting telerobotic systems.
 \end{quote}
 
 The fondamental ideas are developed in the context of passivity formalism which
@@ -531,6 +531,119 @@ In Fig \ref{fig:scat_pp_contact_kalman} some noise measurements are added, both 
     \end{center}
     \caption{Scattering based PP with noisy measurements and kalman filters in contact with a stiff environment at 0.8 and delay 2 time steps}
     \label{fig:scat_pp_contact_kalman}
+\end{figure}
+
+\newpage
+\section{Energy based bilateral teleoperation architecture}
+\subsection{Energy based architecture Position Force}
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pf_free.eps}
+    \end{center}
+    \caption{Energy based architecture PF in free motion with energy in the tanks}
+    \label{fig:energy_pf_free}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pf_contact.eps}
+    \end{center}
+    \caption{Energy based architecture PF in contact at 0.8}
+    \label{fig:energy_pf_contact}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pf_no_energy.eps}
+    \end{center}
+    \caption{Energy based architecture PF in contact at 0.8 with no initial energies}
+    \label{fig:energy_pf_no_energy}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pf_tau.eps}
+    \end{center}
+    \caption{Energy based architecture PF comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
+    \label{fig:energy_pf_tau}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pf_kalman.eps}
+    \end{center}
+    \caption{Energy based architecture PF in contact at 0.8 with noise measurements and kalman filters, with enough initial energies}
+    \label{fig:energy_pf_kalman}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pf_tau_kalman.eps}
+    \end{center}
+    \caption{Energy based architecture PF in contact at 0.8 with noise measurements and kalman filters. Comparison of the torques produced by the transparency and the passivity layer with enough initial energies}
+    \label{fig:energy_pf_tau_kalman}
+\end{figure}
+
+\newpage
+\subsection{Energy based architecture Position Position}
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pp_free.eps}
+    \end{center}
+    \caption{Energy based architecture PP in free motion with energy in the tanks}
+    \label{fig:energy_pp_free}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pp_contact.eps}
+    \end{center}
+    \caption{Energy based architecture PF in contact at 0.8}
+    \label{fig:energy_pp_contact}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pp_no_energy.eps}
+    \end{center}
+    \caption{Energy based architecture PP in contact at 0.8 with no initial energies}
+    \label{fig:energy_pp_no_energy}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pp_tau.eps}
+    \end{center}
+    \caption{Energy based architecture PP comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
+    \label{fig:energy_pp_tau}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pp_kalman.eps}
+    \end{center}
+    \caption{Energy based architecture PP in contact at 0.8 with noise measurements and kalman filters, with enough initial energies}
+    \label{fig:energy_pp_kalman}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/energy_pp_tau_kalman.eps}
+    \end{center}
+    \caption{Energy based architecture PP in contact at 0.8 with noise measurements and kalman filters. Comparison of the torques produced by the transparency and the passivity layer with enough initial energies}
+    \label{fig:energy_pp_tau_kalman}
 \end{figure}
 
 \end{document}

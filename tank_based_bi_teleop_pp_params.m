@@ -8,7 +8,7 @@ A = 1;
 Fip = 5;
 % Sin frequency
 Fc = 0.1; 
-delay = 1;
+delay = 10;
 
 % Cut off frequency for filter after each discrete derivative
 Filter = 10; %Hz
@@ -55,8 +55,8 @@ Ke = 200; %200;
 alpha = 1;
 beta = 0.2;
 h_limit = 1.5;
-H_master_init = 1;
-H_slave_init = 1;
+H_master_init = 0;
+H_slave_init = 0;
 
 % Sampling time
 Ts = 0.001;

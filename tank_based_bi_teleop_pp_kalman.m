@@ -8,7 +8,7 @@ A = 1;
 Fip = 5;
 % Sin frequency
 Fc = 0.1; 
-delay = 1;
+delay = 3;
 
 % Cut off frequency for filter after each discrete derivative
 Filter = 10; %Hz
