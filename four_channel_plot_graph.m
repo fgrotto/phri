@@ -5,10 +5,10 @@ grid on;
 plot(out.xd.Time(1:end), out.xd.data(1:end),'LineWidth', 1.2);
 hold on, plot(out.xs.Time(1:end), out.xs.data(1:end),'LineWidth', 1.2);
 hold on, plot(out.xm.Time(1:end), out.xm.data(1:end),'LineWidth', 1.2);
-% yline(0.8,'-','environment');
+yline(0.5,'-','environment');
 xlabel('time [s]');
 ylabel('position [rad]');
-legend('xs','xs','xm');
+legend('xd','xs','xm');
 
 subplot(3,1,2);
 hold on;

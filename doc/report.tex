@@ -193,6 +193,16 @@ Finally the Fig \ref{fig:four_step} gives an idea of the reponse of the system t
 
 \noindent The entire architecture was translated in the related discretized version according to our specification in terms of encoders and the related derivative were performed using the simulink block. In the following section kalman filters will be introduced and they will be used to filter noisy estimations of velocities and accelerations.
 
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.2cm}
+        \includegraphics[scale=0.5]{images/four_step_kalman_2.eps}
+    \end{center}
+    \caption{Four channel architecture with white noise. The sinusoidal reference is much faster in this case}
+    \label{fig:four_noisy}
+\end{figure}
+
 \bigskip
 \noindent The inner force loops in this architecture don't produce really different results so the related plots are not reported. 
 
@@ -293,7 +303,7 @@ Our aim is to estimate the velocities and accelerations from noisy position meas
 \]
 
 It is important to notice the presence of two variance matrixes $R$ related to $v_k$ and $Q$ related to $w_k$. The variance matrix $R$ also called noise variance depends on the sensors whereas the variance
-matrix $Q$ also called model variance is chosen in order to explain the measurements as well as
+matrix $Q$ also called model variance is chosen in order to explain the measurements as best as
 possible. They are crucial for proper tuning of the kalman filter.
 
 \bigskip

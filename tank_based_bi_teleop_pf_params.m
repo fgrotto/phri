@@ -14,9 +14,9 @@ delay = 10;
 Filter = 100; %Hz
 
 % Human intention controller (PI)
-Ph = 5;
+Ph = 5; %5;
 Dh = 0;
-Ih = 2;
+Ih = 0; %2;
 
 % Master controller
 Bm = 0; %0.8;
@@ -55,8 +55,9 @@ Ke = 200; %200;
 alpha = 0.1;
 beta = 0.01;
 h_limit = 0.5;
-H_master_init = 0;
-H_slave_init = 0;
+H_master_init = 1;
+H_slave_init = 1;
+
 
 % Sampling time
 Ts = 0.001;
