@@ -11,7 +11,6 @@
 \usepackage{kpfonts}
 \usepackage{mathpazo}
 \usepackage{enumitem}
-% \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
 
 \begin{document}
 \author{Filippo Grotto VR460638}
@@ -22,7 +21,7 @@
 \tableofcontents
 
 \section{Introduction}
-In bilateral telemanipulation the aim is to allow to interact with a remote environment by using a joystic. The user manipulates the environment and perceives the reaction force through the haptic device (force feedback). The role of the control is to guarantee and/or enhance the coupling characteristics between the user at the master side and the environment at the slave side. Several components plays a role in a bilateral telemanipulation architecture: human operator, haptic device, master controller, communication channel (using a proper protocol), slave controller, slave robot and environment. A crucial part is the communication channel that has to be robust to delays and packet losses. 
+In bilateral telemanipulation the aim is to allow to interact with a remote environment by using a joystick. The user manipulates the environment and perceives the reaction force through the haptic device (force feedback). The role of the control is to guarantee and/or enhance the coupling characteristics between the user at the master side and the environment at the slave side. Several components plays a role in a bilateral telemanipulation architecture: human operator, haptic device, master controller, communication channel (using a proper protocol), slave controller, slave robot and environment. A crucial part is the communication channel that has to be robust to delays and packet losses. 
 
 \bigskip
 \noindent The hybrid two-port representation that we are going to use are the following
@@ -57,7 +56,7 @@ where
 The key concepts of an architecture are:
 \bigskip
 \begin{itemize}
-    \item \textbf{Stability}: meaning that all the variales within the teleop system are bounded
+    \item \textbf{Stability}: meaning that all the variables within the teleop system are bounded
     \item \textbf{Transparency}: meaning that the operator at the master side has the feeling to interact directly with the remote environment at the slave side.
     \item \textbf{Telepresence} denotes a dynamic behavior in which the environmental effects experienced by the slave are transferred through the master to the human without alteration
 \end{itemize}
@@ -81,12 +80,12 @@ The key concepts of an architecture are:
 
 In general, it would be enough to obtain good transparency at low frequencies, so the
 operator can accurately determine stiffness while in contact with an environment, or
-determine payload inertia while in free motion. It is also good to define some performance indicies like \textbf{position tracking}, \textbf{force rendering} and \textbf{impedance coupling}.
+determine payload inertia while in free motion. It is also good to define some performance indices like \textbf{position tracking}, \textbf{force rendering} and \textbf{impedance coupling}.
 The higher the bandwidth of the transparency, the larger the degree of telepresence but in this case stability becomes a limiting factor in achievable bandwidths
 
 \section{Four channel bilateral teleoperation architecture}
 
-This architecture was described by Dale A. Lawrence in \textit{Stability and Transparency in Bilateral Teleoperation}. There are 4 channeels meaning two signals from master to slave and two signals from slave to master. However this architecture can be specialized to obtain other teleoperation schemees according to available sensors. It is based on some assumptions:
+This architecture was described by Dale A. Lawrence in \textit{Stability and Transparency in Bilateral Teleoperation}. There are 4 channels meaning two signals from master to slave and two signals from slave to master. However this architecture can be specialized to obtain other teleoperation schemes according to available sensors. It is based on some assumptions:
 \begin{itemize}
     \item No communication delays between slave side and master side
     \item Perfect knowledge of the master and slave robot dynamics
@@ -113,7 +112,7 @@ Moreover it is possible to set $C_2 < 1$ to reduce operator's fatigue or $C_2 > 
     C_2 = 1 + C_{mf}
 \end{cases}
 \]
-Force and position feedback act in oppositve ways, in the sense that one softens and the other stiffens the seder device. When the slave is in contact with hard enviroment the contact force is the dominant signal for transmission, in from motion or soft environment the position/velocity is the dominant signal.
+Force and position feedback act in opposite ways, in the sense that one softens and the other stiffens the seder device. When the slave is in contact with hard environment the contact force is the dominant signal for transmission, in from motion or soft environment the position/velocity is the dominant signal.
 
 \begin{figure}[H]
     \begin{center}
@@ -124,7 +123,7 @@ Force and position feedback act in oppositve ways, in the sense that one softens
     \label{fig:four_channel}
 \end{figure}
 
-\subsection{Continuous and discretized implementation}
+\subsection{Single-Input Single-Output implementation}
 Implement the SISO Four-channel bilateral teleoperation architecture with
 \[
     C_m = B_m + \frac{K_m}{s} \quad
@@ -153,7 +152,7 @@ G_s = \frac{1}{M_ss^2+B_ss+K_s}
 \end{figure}
 
 \bigskip
-\noindent The proper parameters were selected considering the step reponse of the two second order systems. For the human intention controller the parameters were selected by comparing the reference position with the master/slave position and perform proper tuning (an analytical closed-loop system might also be considered for this analysis).
+\noindent The proper parameters were selected considering the step response of the two second order systems. For the human intention controller the parameters were selected by comparing the reference position with the master/slave position and perform proper tuning (an analytical closed-loop system might also be considered for this analysis).
 
 \bigskip
 The environment is a pure stiffness $K_e = 200$ but also other scenario has been considered. The reference is sinusoidal function with unitary amplitude and frequency 0.1Hz
@@ -167,7 +166,7 @@ The environment is a pure stiffness $K_e = 200$ but also other scenario has been
     \label{fig:four_cotact}
 \end{figure}
 
-In Fig \ref{fig:four_cotact} it is visible the transparency effect at contact $f_e=f_h$. The initial oscillations come from the tuning of the human controller. As it is visible the environment changes the behaviour of the master if we compare it with Fig \ref{fig:four_free}.
+In Fig \ref{fig:four_cotact} it is visible the transparency effect at contact $f_e=f_h$. The initial oscillations come from the tuning of the human controller. As it is visible the environment changes the behavior of the master if we compare it with Fig \ref{fig:four_free}.
 
 \begin{figure}[H]
     \begin{center}
@@ -180,7 +179,7 @@ In Fig \ref{fig:four_cotact} it is visible the transparency effect at contact $f
 
 As it is visible in Fig \ref{fig:four_free} the architecture is correctly following the reference provided. There is however a large effect due to the initial motion in all the presented figures due to high gain. In Fig \ref{fig:four_cotact} the contact interaction is clearly visible in the forces plot when the position reaches 0.8. 
 
-Finally the Fig \ref{fig:four_step} gives an idea of the reponse of the system to a step function and Fig \ref{fig:four_noisy} emphasises the problem related to estimation of velocity and accelerations with noisy measurements. Moreover the inner force feedback can be introduced as constants and be properly tuned as desired.
+Finally the Fig \ref{fig:four_step} gives an idea of the response of the system to a step function and Fig \ref{fig:four_noisy} emphasizes the problem related to estimation of velocity and accelerations with noisy measurements. Moreover the inner force feedback can be introduced as constants and be properly tuned as desired.
 
 \begin{figure}[H]
     \begin{center}
@@ -206,7 +205,7 @@ Finally the Fig \ref{fig:four_step} gives an idea of the reponse of the system t
 \bigskip
 \noindent The inner force loops in this architecture don't produce really different results so the related plots are not reported. 
 
-\subsection{Derive the hybrid matrix}
+\subsection{Derive the Lawrence hybrid matrix}
 
 Derive the hybrid matrix for the four channel bilateral teleoperation considering the inner force loop at the master and slave side. We can directly consider Fig \ref{fig:four_channel}.
 
@@ -274,8 +273,67 @@ Derive the hybrid matrix for the four channel bilateral teleoperation considerin
     \overline{H_{22}} = \frac{(1+C_{sf})(1+C_{mf})-C_2C_3}{(1+C_{mf})Z_{cs}-C_3C_4}
 \]
 
+\subsection{Derive the Hannaford hybrid matrix}
+Derive the hybrid matrix H for the four channel bilateral teleoperation considering the inner force loop at the master and slave side. We can directly consider Fig \ref{fig:four_channel}.
+
+\[
+\begin{bmatrix}  f_m \\ v_m \end{bmatrix} = \begin{bmatrix}
+    H_{11} & H_{12} \\
+    H_{21} & H_{22} \\
+\end{bmatrix} = \begin{bmatrix}  v_s \\ -f_s \end{bmatrix}
+\]
+
+\noindent Let's start by defining:
+\begin{equation}
+    v_m = Z_{m}^{-1}(f_m(1+C_{mf}) - C_2f_s - C_4v_s-v_mC_m)
+\end{equation}
+\begin{equation}
+    v_s = Z_{s}^{-1}(v_mC_1 + f_mC_3 - f_s(C_{sf}+1) - v_sC_s)
+\end{equation}
+
+\noindent Finally let's compute the 4 components of the hybrid matrix considering one component to zero at each step.
+\[
+    H_{11} : f_m \rightarrow v_s \qquad f_s = 0
+    \]\[
+    (Z_m + C_m)v_m = f_m(1+C_{mf}) - C_4v_s \qquad \text{from (3)}
+\]\[
+    H_{11} = \frac{(Z_s+C_s)(Z_m+C_m) +C_4C_1}{C_1(1+C_{mf}) + C_3(Z_m+C_m)}  \qquad \text{by (4) for removing } v_m
+\]
+
+
+\bigskip
+
+\[
+    H_{12} : f_m \rightarrow -f_s \qquad v_s = 0
+    \]\[
+        (Z_m + C_m)v_m = f_m(1+C_{mf}) - C_2f_s \qquad \text{from (3)}
+\]\[
+    H_{12} = \frac{-(1+C_{sf})(Z_m+C_m) - C_2C_1}{C_1(1+C_mf)+C_3(Z_m+C_m)} \qquad \text{by (4) for removing } v_m
+\]
+
+\bigskip
+
+\[
+    H_{21} : v_m \rightarrow v_s \qquad f_s = 0
+    \]\[
+    (1+C_{mf})f_m = v_m(Z_m + C_m) + C_4v_s \qquad \text{from (3)}
+\]\[
+    H_{21} = \frac{(1+C_{mf})(Z_s + C_s) - C_3C_4}{C_3(Z_m + C_m)+ C_1(1+C_mf)} \qquad \text{by (4) for removing } f_m
+\]
+
+
+\bigskip
+
+\[
+    H_{22} : v_m \rightarrow f_s \qquad v_s = 0
+\]\[
+    (1+C_{mf})f_m = v_m(Z_m + C_m) + C_2f_s \qquad \text{from (3)}
+\]\[
+    H_{22} = \frac{C_2C_3 - (1+C_{mf})(1+C_{sf})}{C_1(1+C_{mf}) + C_3(Z_m+C_m)}  \qquad \text{by (4) for  removing } f_m
+\]
+
 \section{Kalman Filter, Predictor and Smoother}
-In this section we are briefy going to consider the following estimation problems:
+In this section we are briefly going to consider the following estimation problems:
 \begin{itemize}
     \item \textbf{Filtering} estimate $\hat{s}(t)$ using measurements till time t
     \item \textbf{Prediction}: estimate $\hat{s}(t+h)$ using measurements till time t
@@ -283,7 +341,7 @@ In this section we are briefy going to consider the following estimation problem
 \end{itemize}
 \bigskip
 
-Our aim is to estimate the velocities and accelerations from noisy position measurements. Some samples were provided for the task and the kalman filter and predictor were implemented as well as the steady state versions. The theory behind the kalman filter and predictor is not fully reported. Let's derive the discretized model for the position, velocities and accelerations to use in the kalman filter:
+Our aim is to estimate the velocities and accelerations from noisy position measurements. Some samples were provided for the task and the kalman filter and predictor were implemented as well as the steady state versions. The theory behind the kalman filter and predictor is not fully reported. Let's derive the discrete-time model for the position, velocities and accelerations to use in the kalman filter:
 
 \begin{equation}
     \dot{x}(t) =  \begin{bmatrix}  0&1&0 \\ 0&0&1\\0&0&0 \end{bmatrix} x(t) + \begin{bmatrix}  0\\0\\1 \end{bmatrix} w(t)
@@ -291,15 +349,15 @@ Our aim is to estimate the velocities and accelerations from noisy position meas
     y(t) = \begin{bmatrix}  1&0&0 \end{bmatrix}x(t) + v(t)
 \end{equation}
 
-\noindent Let's discretize the continuous-time model:
+\noindent Let's compute the discrete-time model from the continuous-time model:
 \[
     A_d = e^{AT_s} = e^{\begin{bmatrix}  0&1&0 \\ 0&0&1\\0&0&0 \end{bmatrix}T_s} = \begin{bmatrix} 1&T_s&\frac{T_s^2}{2}\\0&1&T_s\\0&0&1 \end{bmatrix}
 \]
 \[
-    C_d = C = \begin{bmatrix} 1&0&0 \end{bmatrix}
+    B_d = \int_{0}^{T_s} e^{\begin{bmatrix} 1&\tau&\tau^2/2\\0&1&\tau\\0&0&1 \end{bmatrix}} \,d\tau  = \begin{bmatrix} T_s^3/6\\T_s^2/2\\T_s \end{bmatrix}
 \]
 \[
-    B_d = \left (\int_{0}^{T_s} e^{\begin{bmatrix} 1&\tau&\tau^2/2\\0&1&\tau\\0&0&1 \end{bmatrix}} \,d\tau \right) = \begin{bmatrix} T_s^3/6\\T_s^2/2\\T_s \end{bmatrix}
+    C_d = C = \begin{bmatrix} 1&0&0 \end{bmatrix}
 \]
 
 It is important to notice the presence of two variance matrixes $R$ related to $v_k$ and $Q$ related to $w_k$. The variance matrix $R$ also called noise variance depends on the sensors whereas the variance
@@ -307,12 +365,12 @@ matrix $Q$ also called model variance is chosen in order to explain the measurem
 possible. They are crucial for proper tuning of the kalman filter.
 
 \bigskip
-\noindent Briefly the Kalman filter can be defined using a recursive formulation composed of a prediction and an estimation step with proper initial conditions:
+\noindent Briefly, the \textbf{kalman filter} can be defined using a recursive formulation composed of a prediction and an estimation step with proper initial conditions:
 \[
     \hat{x}_{k+1|k+1} = A\hat{x}_{k|K} + K_{k+1}(y_{k-1} - CA\hat{x}_{k|k})
 \]   
 \[
-    P_{k+1|k} = AP_{k|k-1}A^T - AP_{k|k-1}C^T(CP_{k|k-1}C^T + R)^{-1}CP_{k|k-1}A^T+Q \qquad \textbf{Ricati equation}
+    P_{k+1|k} = AP_{k|k-1}A^T - AP_{k|k-1}C^T(CP_{k|k-1}C^T + R)^{-1}CP_{k|k-1}A^T+Q
 \]
 
 \bigskip
@@ -321,7 +379,9 @@ where the kalman gain maps the output estimation error into the correction of th
     K_{k+1} = P_{k+1|k}C^T(CP_{k+1|k}C^T+R)^{-1} \qquad \textbf{Kalman gain}
 \]
 
-when k goes to infinity we can consider the steady-state kalman filter which uses the Algebraic Ricati Equation (ARE) for getting $P_{\infty}$. Informally the steady-state kalman filter is not optimal at the beginning of the experiments but we can reach reasonable results.
+when k goes to infinity we can consider the steady-state kalman filter which uses the Algebraic Ricati Equation (ARE) for getting $P_{\infty}$. Informally the steady-state kalman filter is not optimal at the beginning of the experiments but we can reach reasonable results. The entire formulations for the kalman predictor and smoother are not reported.
+
+The parameters used are $q = 1000$, $R = 1$, $Q = qB_dB_d^T$, the initial state $x_0 = [pos; 0; 0]$ and the variance $P_0 = 0.1 \cdot eye(3)$.
 
 \begin{figure}[H]
     \begin{center}
@@ -368,7 +428,7 @@ where $\hat{\beta} \in \mathbb{R}^m$ is the matrix of coefficients that we have 
 \bigskip
 \noindent The following methods are reported:
 \begin{itemize}
-    \item \textbf{Least square solution} $\hat{\beta} = (X^TX)^{-1}X^TY$ if $X^TX$ is nonsingular
+    \item \textbf{Least square solution} $\hat{\beta} = (X^TX)^{-1}X^TY$ if $X^TX$ is non-singular
     \item \textbf{Adaptive algorithm} $\hat{\beta}(k) = \hat{\beta}(k-1) + T_sgx^T(k)e(k)$ with $g > 0$. Basically we are moving in the opposite direction of the gradient of the minimized square error.
     \item \textbf{Recursive Least square} by solving the causal formulation:
 \end{itemize}
@@ -380,7 +440,7 @@ where $\hat{\beta} \in \mathbb{R}^m$ is the matrix of coefficients that we have 
         \hat{\beta}(k) = \hat{\beta}(k-1) + K(k)e(k) 
     \end{cases}
 \]
-where $0 < \lambda \leq 1 $ is called forgetting factor
+where $0 < \lambda \leq 1 $ is called forgetting factor. The results obtained by the models are close to $k = 15.226487$ and $\tau = 1.212946$.
 
 \begin{figure}[H]
     \begin{center}
@@ -402,7 +462,7 @@ where $0 < \lambda \leq 1 $ is called forgetting factor
     \begin{center}
         \includegraphics[scale=0.3]{images/adaptive.eps}
     \end{center}
-    \caption{Adaptive estimation of the DC model of the motor}
+    \caption{Adaptive estimation of the DC model of the motor with $g = 0.54$}
     \label{fig:adaptive}
 \end{figure}
 
@@ -419,7 +479,7 @@ The core ideas in this architecture were described by Niemeyer and Slotine in St
     a preliminary study on how the existence of time-delays affects the application of advanced control schemes to effective force-reflecting telerobotic systems.
 \end{quote}
 
-The fondamental ideas are developed in the context of passivity formalism which
+The fundamental ideas are developed in the context of passivity formalism which
 \begin{quote}
     represents a mathematical description of the intuitive physical concepts of power and energy. It provides a simple and robust tool to analyze the stability of a nonlinear system while maintaining global stability properties.
 \end{quote}
@@ -457,6 +517,17 @@ they can be used to extract the desired configurations based on the signal provi
 
 The idea of the scattering based PF is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the scattering based architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
 
+\[
+    \begin{cases}
+    u_l=\sqrt{2b}\dot{x}_l+v_l\\
+    F_l=b\dot{x}_l+\sqrt{2b}v_l
+    \end{cases}
+    \begin{cases}
+    u_r=\sqrt{\frac{2}{b}}F_r-v_r\\
+    \dot{x}_r=-\frac{1}{b}(F_r-\sqrt{2b}v_r)
+    \end{cases}
+\]
+
 \bigskip
 In Fig \ref{fig:scat_pf_free} the free motion case is reported. As it is visible the system is stable and there is a minimal delay in the position compared to reference $x_d$.
 
@@ -465,7 +536,7 @@ In Fig \ref{fig:scat_pf_free} the free motion case is reported. As it is visible
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scat_pf_free.eps}
     \end{center}
-    \caption{Scattering based PF in free motion}
+    \caption{Scattering based PF in free motion, a low pass filter is introduced in the scattering formulation to correct numerical errors at 100Hz}
     \label{fig:scat_pf_free}
 \end{figure}
 
@@ -492,7 +563,7 @@ In Fig \ref{fig:scat_pf_contact_kalman} some noise measurements are added, both 
     \label{fig:scat_pf_contact_kalman}
 \end{figure}
 
-In all the previous plots the scattering variables were not considered. For simplicity they are reported only once in a contact case in Fig \ref{fig:scat_var}.
+In all the previous plots the scattering variables were not considered. For simplicity they are reported only once in a contact case in Fig \ref{fig:scat_var}. As it is visible forces and velocities should match according to the scattering formulation. There numerical problems during the immediate contact as it is clearly visible and it can be corrected by adjusting the low pass filter.
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
@@ -502,11 +573,33 @@ In all the previous plots the scattering variables were not considered. For simp
     \label{fig:scat_var}
 \end{figure}
 
+Finally, In Fig \ref{fig:scatt_pf_step} the scattering based architecture PF was evaluated with a step reference in contact. This gives a minimal idea of the interaction forces and the actual position reached by the master and the slave.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scatt_pf_step.eps}
+    \end{center}
+    \caption{Scattering based PF in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
+    \label{fig:scatt_pf_step}
+\end{figure}
+
 \newpage
 
 \subsection{Scattering based Position-Position}
 
-The idea of the scattering based PP is to use the master and slave force measurements and use the scattering transformations to obtain the velocites on both sides. In this way we have a velocity controller on both slave and master. In this scenario the scattering based architecture Position-Position was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+The idea of the scattering based PP is to use the master and slave force measurements and use the scattering transformations to obtain the velocities on both sides. In this way we have a velocity controller on both slave and master. In this scenario the scattering based architecture Position-Position was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+
+\[
+    \begin{cases}
+    u_l=\sqrt{\frac{2}{b}}F_l-v_l\\
+    \dot{x}_l = \frac{1}{b}(F_l-\sqrt{2b}v_l)
+    \end{cases}
+    \begin{cases}
+    u_r=\sqrt{\frac{2}{b}}F_r-v_r\\
+    \dot{x}_r=-\frac{1}{b}(F_r-\sqrt{2b}v_r)
+    \end{cases}
+\]
 
 \bigskip
 In Fig \ref{fig:scat_pp_free} the free motion case is reported. As it is visible the system is stable and there is a minimal delay in the position compared to reference $x_d$.
@@ -516,7 +609,7 @@ In Fig \ref{fig:scat_pp_free} the free motion case is reported. As it is visible
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scat_pp_free.eps}
     \end{center}
-    \caption{Scattering based PP in free motion}
+    \caption{Scattering based PP in free motion a low pass filter is introduced in the scattering formulation to correct numerical errors}
     \label{fig:scat_pp_free}
 \end{figure}
 
@@ -543,117 +636,211 @@ In Fig \ref{fig:scat_pp_contact_kalman} some noise measurements are added, both 
     \label{fig:scat_pp_contact_kalman}
 \end{figure}
 
+Finally, In Fig \ref{fig:scatt_pp_step} the scattering based architecture PP was evaluated with a step reference in contact. This gives a minimal idea of the interaction forces and the actual position reached by the master and the slave.
+
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-4.5cm}
+        \includegraphics[scale=0.5]{images/scatt_pp_step.eps}
+    \end{center}
+    \caption{Scattering based PP in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
+    \label{fig:scatt_pp_step}
+\end{figure}
+
+\subsection{Other considerations}
+
+The aim of the architecture is to use passivity to stay stable in presence of delays. In order to verify this assumption a delay of $400$ time steps was used to "break" the original implementation without scattering variables and compared against the use of scattering variables as it is reported in Fig \ref{fig:delay_comp}. In general it is not easy to find such a case even in simulated models and it required a lot of trials.
+
+\begin{figure}[H]
+    \hspace*{-3.5cm}
+    \includegraphics[scale=0.45]{images/scatt_high_delay.eps}
+    \qquad
+    \hspace*{-3.5cm}
+    \includegraphics[scale=0.45]{images/scatt_high_delay_comp.eps}
+    \caption{First on top: PF architecture without scattering formulation with 400 delay time steps. Second from top: Scattering PF architecture with 400 delay time steps}
+    \label{fig:delay_comp}
+\end{figure}
+
 \newpage
-\section{Energy based bilateral teleoperation architecture}
-\subsection{Energy based architecture Position Force}
+\section{Two-Layer bilateral teleoperation architecture}
+
+The Two-layer bilateral teleoperation for transparency and passivity was firstly introduced in \textit{Bilateral Telemanipulation With Time Delays:
+A Two-Layer Approach Combining Passivity
+and Transparency} and the core idea is to
+ \begin{quote}
+guarantee the stable behavior of bilateral telemanipulation systems in the presence of time-varying destabilizing factors. The approach splits the control architecture into two separate layers. The hierarchical top layer is used
+to implement a strategy that addresses the desired transparency,
+and the lower layer ensures that no “virtual” energy is generated.
+\end{quote}
+In Fig \ref{fig:layer} the transparency and passivity layers and their interactions are briefly reported.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[scale=0.6]{images/layer.png}
+    \end{center}
+    \caption{Two-layer algorithm for bilateral telemanipulation: Double connections indicate an energetic interaction, taken from \cite{Franken11}}
+    \label{fig:layer}
+\end{figure}
+
+The core idea in the passivity layer is to maintain an energy tank defined as follow:
+\[
+    H(k) = H(\overline{k}) + H_{+}(k) - \Delta H_I(k)
+\]
+
+where $H(\overline{k})$ is the energy from the past or previous step, $ H_{+}(k)$ is the energy exchanged from the slave side as energy packet and $\Delta H_I(k)$ is the actual energy spent at step $k$ computed as follow:
+
+\[
+    \Delta H_I(k) = \tau(\overline{k}) \Delta q(k)
+\]
+In Fig \ref{fig:architecture} the entire workflow is reported from the original paper describing both master and slave side.
+\begin{figure}[H]
+    \begin{center}
+        \hspace*{-2.2cm}
+        \includegraphics[scale=0.28]{images/architecture.png}
+    \end{center}
+    \caption{Workflow of the complete passivity layer at either side of the telemanipulation system, taken from \cite{Franken11}}
+    \label{fig:architecture}
+\end{figure}
+
+For the complete architecture description please refer to \cite{Franken11}.
+
+\subsection{Two-Layer bilateral architecture Position Force}
+The idea of the scattering based PF is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the two layer architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+
+\bigskip
+In Figure \ref{fig:energy_pf_free} the free motion response of a sinusoidal reference is reported with proper tuning both at master and slave side.
+
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pf_free.eps}
     \end{center}
-    \caption{Energy based architecture PF in free motion with energy in the tanks}
+    \caption{Two-Layer bilateral architecture PF in free motion with energy in the tanks}
     \label{fig:energy_pf_free}
 \end{figure}
+
+\newpage
+In Figure \ref{fig:energy_pf_contact} the contact plot of a sinusoidal reference is reported with proper tuning. Enough initial energy was set in the tanks to perform the task.
 
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pf_contact.eps}
     \end{center}
-    \caption{Energy based architecture PF in contact at 0.8}
+    \caption{Two-Layer bilateral architecture PF in contact at 0.8}
     \label{fig:energy_pf_contact}
 \end{figure}
 
+The parameters used for the energy layer are $\alpha = 0.1$, $\beta = 0.01$ and the level for the TLC $H_d = 0.5$. However this values are indicative and were briefly adjusted in the various scenarios to obtain the related plots.
+\bigskip
+
+In Fig \ref{fig:energy_pf_no_energy} the actual effect of the passivity layer is reported when there is no initial energy. The passivity layer actually modulates the transparency command due to missing energy.
+
 \begin{figure}[H]
-    \begin{center}
-        \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pf_no_energy.eps}
-    \end{center}
-    \caption{Energy based architecture PF in contact at 0.8 with no initial energies}
+    \hspace*{-4.5cm}
+    \includegraphics[scale=0.5]{images/energy_pf_no_energy.eps}
+    \qquad
+    \hspace*{-1.5cm}
+    \includegraphics[scale=0.4]{images/energy_pf_tau.eps}
+    \caption{Top: Two-Layer bilateral architecture PF in contact at 0.8 with no initial energies. Bottom: Comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
     \label{fig:energy_pf_no_energy}
 \end{figure}
 
-\begin{figure}[H]
-    \begin{center}
-        \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pf_tau.eps}
-    \end{center}
-    \caption{Energy based architecture PF comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
-    \label{fig:energy_pf_tau}
-\end{figure}
 
 \begin{figure}[H]
-    \begin{center}
-        \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pf_kalman.eps}
-    \end{center}
-    \caption{Energy based architecture PF in contact at 0.8 with noise measurements and kalman filters, with enough initial energies}
+    \hspace*{-4.5cm}
+    \includegraphics[scale=0.5]{images/energy_pf_kalman.eps}
+    \qquad
+    \hspace*{-1.5cm}
+    \includegraphics[scale=0.4]{images/energy_pf_tau_kalman.eps}
+    \caption{Top: Two-Layer architecture PF in contact at 0.8 with kalman filters. Bottom: Comparison of the torques produced by the transparency and the passivity layer with full initial energies}
     \label{fig:energy_pf_kalman}
 \end{figure}
+\newpage
+
+Finally, In Figure \ref{fig:energy_pf_step} the step response of the architecture is reported.
 
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pf_tau_kalman.eps}
+        \includegraphics[scale=0.5]{images/energy_pf_step.eps}
     \end{center}
-    \caption{Energy based architecture PF in contact at 0.8 with noise measurements and kalman filters. Comparison of the torques produced by the transparency and the passivity layer with enough initial energies}
-    \label{fig:energy_pf_tau_kalman}
+    \caption{Two-Layer bilateral architecture PF in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
+    \label{fig:energy_pf_step}
 \end{figure}
 
 \newpage
-\subsection{Energy based architecture Position Position}
+\subsection{Two-Layer bilateral architecture Position Position}
+The idea of the PP architecture is to use the master and slave velocities measurements and use them as reference on the other side. In this way we have a velocity controller on both slave and master. In this scenario the two layer architecture Position-Position was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+
+\bigskip
+In Figure \ref{fig:energy_pp_free} the free motion response of a sinusoidal reference is reported with proper tuning both at master and slave side.
+
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pp_free.eps}
     \end{center}
-    \caption{Energy based architecture PP in free motion with energy in the tanks}
+    \caption{Two-Layer bilateral architecture PP in free motion with energy in the tanks}
     \label{fig:energy_pp_free}
 \end{figure}
+
+\newpage
+In Figure \ref{fig:energy_pp_contact} the contact plot of a sinusoidal reference is reported with proper tuning. Enough initial energy was set in the tanks to perform the task.
 
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pp_contact.eps}
     \end{center}
-    \caption{Energy based architecture PF in contact at 0.8}
+    \caption{Two-Layer bilateral architecture PP in contact at 0.8}
     \label{fig:energy_pp_contact}
 \end{figure}
 
+The parameters used for the energy layer are $\alpha = 0.1$, $\beta = 0.01$ and the level for the TLC $H_d = 0.5$. However this values are indicative and were briefly adjusted in the various scenarios to obtain the related plots.
+\bigskip
+
+In Fig \ref{fig:energy_pp_no_energy} the actual effect of the passivity layer is reported when there is no initial energy. The passivity layer actually modulates the transparency command due to missing energy.
+
 \begin{figure}[H]
-    \begin{center}
-        \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pp_no_energy.eps}
-    \end{center}
-    \caption{Energy based architecture PP in contact at 0.8 with no initial energies}
+    \hspace*{-4.5cm}
+    \includegraphics[scale=0.5]{images/energy_pp_no_energy.eps}
+    \qquad
+    \hspace*{-1.5cm}
+    \includegraphics[scale=0.4]{images/energy_pp_tau.eps}
+    \caption{Top: Two-Layer bilateral architecture PP in contact at 0.8 with no initial energies. Bottom: Comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
     \label{fig:energy_pp_no_energy}
 \end{figure}
 
-\begin{figure}[H]
-    \begin{center}
-        \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pp_tau.eps}
-    \end{center}
-    \caption{Energy based architecture PP comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
-    \label{fig:energy_pp_tau}
-\end{figure}
 
 \begin{figure}[H]
-    \begin{center}
-        \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pp_kalman.eps}
-    \end{center}
-    \caption{Energy based architecture PP in contact at 0.8 with noise measurements and kalman filters, with enough initial energies}
+    \hspace*{-4.5cm}
+    \includegraphics[scale=0.5]{images/energy_pp_kalman.eps}
+    \qquad
+    \hspace*{-1.5cm}
+    \includegraphics[scale=0.4]{images/energy_pp_tau_kalman.eps}
+    \caption{Top: Two-Layer architecture PP in contact at 0.8 with kalman filters. Bottom: Comparison of the torques produced by the transparency and the passivity layer with full initial energies}
     \label{fig:energy_pp_kalman}
 \end{figure}
+\newpage
+
+Finally, In Figure \ref{fig:energy_pp_step} the step response of the architecture is reported.
 
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
-        \includegraphics[scale=0.5]{images/energy_pp_tau_kalman.eps}
+        \includegraphics[scale=0.5]{images/energy_pp_step.eps}
     \end{center}
-    \caption{Energy based architecture PP in contact at 0.8 with noise measurements and kalman filters. Comparison of the torques produced by the transparency and the passivity layer with enough initial energies}
-    \label{fig:energy_pp_tau_kalman}
+    \caption{Two-Layer bilateral architecture PP in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
+    \label{fig:energy_pp_step}
 \end{figure}
+
+\begin{thebibliography}{100}
+    \addtolength{\leftmargin}{0.2in}
+    \setlength{\itemindent}{-0.2in}
+
+    \bibitem{Lawrence93} Dale A. Lawrence "Stability and Transparency in Bilateral Teleoperation" 1993
+    \bibitem{Niemeyer91} Gunter Niemeyer and Jean-Jacques E. Slotine "Stable Adaptive Teleoperation" 1991
+    \bibitem{Franken11} M. Franken, S. Stramigioli, S. Misra, C. Secchi, A. Macchelli "Bilateral Telemanipulation With Time Delays: A Two-Layer Approach Combining Passivity and Transparency" 2011
+\end{thebibliography}
 
 \end{document}
