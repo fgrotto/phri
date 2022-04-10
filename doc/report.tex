@@ -325,7 +325,7 @@ Derive the hybrid matrix H for the four channel bilateral teleoperation consider
 \bigskip
 
 \[
-    H_{22} : v_m \rightarrow f_s \qquad v_s = 0
+    H_{22} : v_m \rightarrow -f_s \qquad v_s = 0
 \]\[
     (1+C_{mf})f_m = v_m(Z_m + C_m) + C_2f_s \qquad \text{from (3)}
 \]\[
@@ -513,9 +513,9 @@ The transformations used to map $(\dot{x},F)$ into $(u,v)$ are:
 they can be used to extract the desired configurations based on the signal provided such as forces or velocities.
 
 \newpage
-\subsection{Scattering based Position-Force}
+\subsection{Scattering based Force-Position}
 
-The idea of the scattering based PF is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the scattering based architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+The idea of the scattering based FP is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the scattering based architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
 
 \[
     \begin{cases}
@@ -536,7 +536,7 @@ In Fig \ref{fig:scat_pf_free} the free motion case is reported. As it is visible
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scat_pf_free.eps}
     \end{center}
-    \caption{Scattering based PF in free motion, a low pass filter is introduced in the scattering formulation to correct numerical errors at 100Hz}
+    \caption{Scattering based FP in free motion, a low pass filter is introduced in the scattering formulation to correct numerical errors at 100Hz}
     \label{fig:scat_pf_free}
 \end{figure}
 
@@ -548,7 +548,7 @@ In Fig \ref{fig:scat_pf_contact} the contact case is reported. As it is visible 
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scat_pf_contact.eps}
     \end{center}
-    \caption{Scattering based PF in contact with a stiff environment at 0.8}
+    \caption{Scattering based FP in contact with a stiff environment at 0.8}
     \label{fig:scat_pf_contact}
 \end{figure}
 
@@ -559,7 +559,7 @@ In Fig \ref{fig:scat_pf_contact_kalman} some noise measurements are added, both 
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scatt_pf_contact_kalman.eps}
     \end{center}
-    \caption{Scattering based PF with noisy measurements and kalman filters in contact with a stiff environment at 0.8}
+    \caption{Scattering based FP with noisy measurements and kalman filters in contact with a stiff environment at 0.8}
     \label{fig:scat_pf_contact_kalman}
 \end{figure}
 
@@ -569,18 +569,18 @@ In all the previous plots the scattering variables were not considered. For simp
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scatt_pf.eps}
     \end{center}
-    \caption{Scattering based PF variables: they should be identical thanks to the scattering formulation. As it is visible there are some numerical errors corrected partially using a low pass filter in the communication channel}
+    \caption{Scattering based FP variables: they should be identical thanks to the scattering formulation. As it is visible there are some numerical errors corrected partially using a low pass filter in the communication channel}
     \label{fig:scat_var}
 \end{figure}
 
-Finally, In Fig \ref{fig:scatt_pf_step} the scattering based architecture PF was evaluated with a step reference in contact. This gives a minimal idea of the interaction forces and the actual position reached by the master and the slave.
+Finally, In Fig \ref{fig:scatt_pf_step} the scattering based architecture FP was evaluated with a step reference in contact. This gives a minimal idea of the interaction forces and the actual position reached by the master and the slave.
 
 \begin{figure}[H]
     \begin{center}
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/scatt_pf_step.eps}
     \end{center}
-    \caption{Scattering based PF in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
+    \caption{Scattering based FP in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
     \label{fig:scatt_pf_step}
 \end{figure}
 
@@ -657,7 +657,7 @@ The aim of the architecture is to use passivity to stay stable in presence of de
     \qquad
     \hspace*{-3.5cm}
     \includegraphics[scale=0.45]{images/scatt_high_delay_comp.eps}
-    \caption{First on top: PF architecture without scattering formulation with 400 delay time steps. Second from top: Scattering PF architecture with 400 delay time steps}
+    \caption{First on top: FP architecture without scattering formulation with 400 delay time steps. Second from top: Scattering FP architecture with 400 delay time steps}
     \label{fig:delay_comp}
 \end{figure}
 
@@ -703,8 +703,8 @@ In Fig \ref{fig:architecture} the entire workflow is reported from the original 
 
 For the complete architecture description please refer to \cite{Franken11}.
 
-\subsection{Two-Layer bilateral architecture Position Force}
-The idea of the scattering based PF is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the two layer architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
+\subsection{Two-Layer bilateral architecture Force Position}
+The idea of the scattering based FP is to use the master velocity as a velocity reference for the slave side and the interaction force with the environment as a reference for the master side. In this scenario the two layer architecture Position-Force was evaluated with a delay of 10 time steps in the communication channel. The environment used is $B_e = 10$ and $K_e = 200$. 
 
 \bigskip
 In Figure \ref{fig:energy_pf_free} the free motion response of a sinusoidal reference is reported with proper tuning both at master and slave side.
@@ -714,7 +714,7 @@ In Figure \ref{fig:energy_pf_free} the free motion response of a sinusoidal refe
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pf_free.eps}
     \end{center}
-    \caption{Two-Layer bilateral architecture PF in free motion with energy in the tanks}
+    \caption{Two-Layer bilateral architecture FP in free motion with energy in the tanks}
     \label{fig:energy_pf_free}
 \end{figure}
 
@@ -726,7 +726,7 @@ In Figure \ref{fig:energy_pf_contact} the contact plot of a sinusoidal reference
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pf_contact.eps}
     \end{center}
-    \caption{Two-Layer bilateral architecture PF in contact at 0.8}
+    \caption{Two-Layer bilateral architecture FP in contact at 0.8}
     \label{fig:energy_pf_contact}
 \end{figure}
 
@@ -741,7 +741,7 @@ In Fig \ref{fig:energy_pf_no_energy} the actual effect of the passivity layer is
     \qquad
     \hspace*{-1.5cm}
     \includegraphics[scale=0.4]{images/energy_pf_tau.eps}
-    \caption{Top: Two-Layer bilateral architecture PF in contact at 0.8 with no initial energies. Bottom: Comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
+    \caption{Top: Two-Layer bilateral architecture FP in contact at 0.8 with no initial energies. Bottom: Comparison of the torques produced by the transparency and the passivity layer without initial energy in the tanks}
     \label{fig:energy_pf_no_energy}
 \end{figure}
 
@@ -752,7 +752,7 @@ In Fig \ref{fig:energy_pf_no_energy} the actual effect of the passivity layer is
     \qquad
     \hspace*{-1.5cm}
     \includegraphics[scale=0.4]{images/energy_pf_tau_kalman.eps}
-    \caption{Top: Two-Layer architecture PF in contact at 0.8 with kalman filters. Bottom: Comparison of the torques produced by the transparency and the passivity layer with full initial energies}
+    \caption{Top: Two-Layer architecture FP in contact at 0.8 with kalman filters. Bottom: Comparison of the torques produced by the transparency and the passivity layer with full initial energies}
     \label{fig:energy_pf_kalman}
 \end{figure}
 \newpage
@@ -764,7 +764,7 @@ Finally, In Figure \ref{fig:energy_pf_step} the step response of the architectur
         \hspace*{-4.5cm}
         \includegraphics[scale=0.5]{images/energy_pf_step.eps}
     \end{center}
-    \caption{Two-Layer bilateral architecture PF in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
+    \caption{Two-Layer bilateral architecture FP in contact at 0.8 with step reference. In order to produce this response the integral action from the human intention controller was removed.}
     \label{fig:energy_pf_step}
 \end{figure}
 
